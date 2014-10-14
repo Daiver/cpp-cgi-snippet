@@ -1,5 +1,5 @@
-bin/main: bin/requesthandler
+bin/main: bin/requesthandler.o
 	g++ -o bin/main main.cpp
 
-bin/requesthandler:
-	g++ -c -o bin/requesthandler requesthandler.cpp
+bin/requesthandler.o:
+	g++ -c -o bin/requesthandler.o requesthandler.cpp
