@@ -2,6 +2,7 @@
 #include <iostream>
 
 #include "getpost.h"
+#include "requesthandler.h"
 
 int main()
 {
