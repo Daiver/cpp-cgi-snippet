@@ -26,6 +26,7 @@ THE SOFTWARE.
 #define __GETPOST_H__
 
 #include <string>
+#include <string.h>
 #include <stdlib.h>
 #include <map>
 #include <new>
