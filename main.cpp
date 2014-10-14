@@ -7,7 +7,8 @@
 int main()
 {
     printf("Status: 200\nContent-type: text/html\n\n");
-    char *data = getenv("REQUEST_METHOD");
-    std::cout << readFile("../templates/index.html");
+    cgi::RequestHandler request;
+    cgi::RequestArgs args = request.getArgs();
+    std::cout << readFile("../templates/index.html") << "\n" << args.size();
     return 1;
 }
