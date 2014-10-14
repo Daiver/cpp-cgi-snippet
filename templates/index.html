@@ -16,12 +16,19 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <script type=text/javascript>
     $(document).ready(function (){
-        
+        serialize = function(obj) {
+            var str = [];
+            for(var p in obj)
+                if (obj.hasOwnProperty(p)) {
+                    str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                }
+          return str.join("&");
+        }
         console.log("ready");
         $.ajax({
             url: "main",
             method: "GET",
-            data: "x=10",
+            data: serialize({'resource': "items"}),
         }).done(function(data) {
             console.log("data", data);
         });
