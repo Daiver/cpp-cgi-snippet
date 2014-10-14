@@ -14,7 +14,7 @@ int main()
     if(args.count("resource")){//process rest
         std::cout << "{" + args["resource"] + "}";
     }else{
-        std::cout << readFile("../templates/index.html") << "\n" << args.size();
+        std::cout << readFile("../templates/index.html") ;
     }
     return 1;
 }
