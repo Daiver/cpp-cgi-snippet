@@ -1,14 +1,14 @@
 #include <stdio.h>
 #include <iostream>
 
-#include "getpost.h"
 #include "requesthandler.h"
+#include "common.h"
 
 int main()
 {
     printf("Status: 200\nContent-type: text/html\n\n");
     printf("Every thing is OK");
     char *data = getenv("REQUEST_METHOD");
-    printf("METH TYPE %s", data);
+    std::cout << readFile("templates/index.html");
     return 1;
 }
