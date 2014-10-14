@@ -29,6 +29,7 @@ std::string TemplateEngine::renderTemplate(const std::string &temp,
             accum += temp[i];
         }
     }
+    res += accum;
 
     return res;
 }

@@ -1,6 +1,7 @@
 .PHONY: all clean .FORCE
 
-CPP = clang++
+#CPP = clang++
+CPP = g++
 
 bin/main: .FORCE bin/main.o
 	$(CPP) -g -o bin/main bin/*.o
