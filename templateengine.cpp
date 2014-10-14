@@ -1,5 +1,7 @@
 #include "templateengine.h"
 
+#include <iostream>
+
 using namespace cgi;
 std::string TemplateEngine::renderTemplate(const std::string &temp, 
         const RequestArgs &args)
@@ -9,8 +11,24 @@ std::string TemplateEngine::renderTemplate(const std::string &temp,
     const char PARSE_TEXT = 1;
     const char PARSE_IDENT = 2;
     char curState = PARSE_TEXT;
-    for(int i = 0; i < temp.size(); ++i){
+    std::string accum = "";
+    for(int i = 0; i < temp.size() - 1; ++i){
+        int a = temp[i];
+        int b = temp[i + 1];
+        if(a == '{' && b == a && curState == PARSE_TEXT){
+            res += accum;
+            accum = "";
+            curState = PARSE_IDENT;
+            ++i;
+        }else if(a == '}' && b == a && curState == PARSE_IDENT){
+            res += args.at(accum);
+            accum = "";
+            curState = PARSE_TEXT;
+            ++i;
+        }else{
+            accum += temp[i];
+        }
     }
 
-    return temp;
+    return res;
 }
