@@ -10,4 +10,5 @@ std::string readFile(const std::string &fileName)
         while ( getline( infile , line ) ) 
             res += line + '\n';
     infile.close( ) ;
+    return res;
 }
