@@ -28,7 +28,7 @@
 *.app
 
 #swp
-.swp
+.*.swp
 
 #build dir
 #
