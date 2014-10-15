@@ -26,5 +26,6 @@ int main()
 {
     if(!test01()) std::cout << "fail test01";
     if(!test02()) std::cout << "fail test02";
+    std::cout << "End";
     return 0;
 }
