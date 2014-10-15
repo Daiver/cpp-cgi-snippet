@@ -1,32 +1,28 @@
 
 namespace functional {
 
-enum EitherType {EITHER_LEFT, EITHER_RIGHT};
-
 template<typename LeftType, typename RightType>
 class Either
 {
     public: 
         static Either Left(LeftType val){
-            return Either(EITHER_LEFT, val);
+            Either e();
+            e.isLeft = true;
+            e.lvalue = val;
+            return e;
         }
 
         static Either Right(RightType val){
-            return Either(val);
+            Either e();
+            e.isLeft = false;
+            e.value = val;
+            return e;
         }
+        bool isLeft;
 
-    protected:
-        Either(RightType right){
-            this->type = EITHER_RIGHT;
-            value = right;
-        }
+    //protected:
+        Either(){}
 
-        Either(EitherType type, LeftType left){
-            this->type = EITHER_LEFT;
-            lvalue = left;
-        }
-
-        EitherType type;
         RightType value;
         LeftType  lvalue;
 };
