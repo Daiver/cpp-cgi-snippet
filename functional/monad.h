@@ -7,12 +7,6 @@ Out staticCompose(In x)
     return F(G(x));
 }
 
-template <typename ClassT, typename RetT, typename T1>
-RetT invokeM(ClassT *instance, RetT (ClassT::*f)(T1), T1 a)
-{
-    return ((*instance).*f)(a);
-}
-
 template <typename MonadType, typename InnerType>
 class Monad
 {
@@ -36,12 +30,9 @@ class Monad
 
         static MonadType mreturn(InnerType) {throw "Not Implemented!";}
 
-        //virtual MonadType bind(BindFunc) const = 0;
-
         MonadType bind(BindFunc f) const
         {
-            BindFunctor func(f);
-            return this->bind(func);
+            return this->bind(BindFunctor(f));
         }
 
         MonadType map(InnerFunc f)

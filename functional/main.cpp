@@ -26,12 +26,17 @@ int f(int i)
     return i * 10;
 }
 
+bool test03()
+{
+    functional::Either<char, int> e = functional::Either<char, int>::Right(100);
+    return (!e.map(f).isLeft) && (e.map(f).getValue() == 1000);
+}
+
 int main()
 {
     if(!test01()) std::cout << "fail test01" << std::endl;
     if(!test02()) std::cout << "fail test02" << std::endl;
+    if(!test03()) std::cout << "fail test03" << std::endl;
     std::cout << "End\n";
-    functional::Either<char, int> e = functional::Either<char, int>::Right(100);
-    std::cout<< e.map(f).getValue();
     return 0;
 }
