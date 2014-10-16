@@ -29,7 +29,7 @@
             url: "main",
             method: "GET",
             data: serialize({'resource': "items"}),
-            dataType:"json",
+            dataType:"text",
         }).done(function(data) {
             console.log("data", data);
             $("#textarea").val(data);
