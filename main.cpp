@@ -24,7 +24,7 @@ int main(int argc, char **argv)
     if(args.count("resource")){//process rest
         if(args.count("id")){
             std::string filePath = pathToExe + "../data/" + args["id"] + ".txt";
-            std::string data = readFile(filePath);
+            std::string data = replaceString(readFile(filePath), "\n", "\\n");
             std::cout << "{\"text\": \"" + data + "\"}";
         }
     }else{
