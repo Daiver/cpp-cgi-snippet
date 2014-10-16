@@ -33,14 +33,14 @@ class Either : public Monad<Either<LeftType, RightType>, RightType>
 
         bool isLeft;
 
-        RightType getValue() const 
+        inline RightType getValue() const 
         {
             if(!isLeft)
                 return value;
             throw "BAD EXTRACT";
         }
 
-        LeftType getLeft() const
+        inline LeftType getLeft() const
         {
             if(isLeft)
                 return lvalue;
@@ -49,7 +49,7 @@ class Either : public Monad<Either<LeftType, RightType>, RightType>
 
         //Either<LeftType, RightType> bind(BindFuncEither func) const
         template<class F>
-        Either<LeftType, RightType> bind(F func) const        
+        inline Either<LeftType, RightType> bind(F func) const        
         {
             if(isLeft)
                 return Left(lvalue);

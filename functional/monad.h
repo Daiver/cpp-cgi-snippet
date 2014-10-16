@@ -30,12 +30,12 @@ class Monad
 
         static MonadType mreturn(InnerType) {throw "Not Implemented!";}
 
-        MonadType bind(BindFunc f) const
+        inline MonadType bind(BindFunc f) const
         {
             return this->bind(BindFunctor(f));
         }
 
-        MonadType map(InnerFunc f)
+        inline MonadType map(InnerFunc f)
         {
             return (*(MonadType*)this).bind(InnerFunctor(f));
         }

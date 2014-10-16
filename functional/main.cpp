@@ -35,7 +35,7 @@ bool test03()
 bool test04()
 {
     functional::Either<char, int> e = functional::Either<char, int>::Left('1');
-    return (e.map(f).isLeft) && (e.getLeft() == '1');
+    return (e.map(f).isLeft) && (e.map(f).getLeft() == '1');
 }
 
 int main()
