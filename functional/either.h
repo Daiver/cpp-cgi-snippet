@@ -40,6 +40,13 @@ class Either : public Monad<Either<LeftType, RightType>, RightType>
             throw "BAD EXTRACT";
         }
 
+        LeftType getLeft() const
+        {
+            if(isLeft)
+                return lvalue;
+            throw "BAD LEFT EXTRACT";
+        }
+
         //Either<LeftType, RightType> bind(BindFuncEither func) const
         template<class F>
         Either<LeftType, RightType> bind(F func) const        

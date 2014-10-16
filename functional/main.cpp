@@ -32,11 +32,18 @@ bool test03()
     return (!e.map(f).isLeft) && (e.map(f).getValue() == 1000);
 }
 
+bool test04()
+{
+    functional::Either<char, int> e = functional::Either<char, int>::Left('1');
+    return (e.map(f).isLeft) && (e.getLeft() == '1');
+}
+
 int main()
 {
     if(!test01()) std::cout << "fail test01" << std::endl;
     if(!test02()) std::cout << "fail test02" << std::endl;
     if(!test03()) std::cout << "fail test03" << std::endl;
+    if(!test04()) std::cout << "fail test04" << std::endl;
     std::cout << "End\n";
     return 0;
 }
