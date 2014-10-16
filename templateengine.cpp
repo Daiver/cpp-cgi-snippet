@@ -35,7 +35,8 @@ TemplateRenderEither TemplateEngine::renderTemplate(const std::string &temp,
     }
     if(curState == PARSE_IDENT)
         return TemplateRenderEither::Left("Bad ident name at the end of the file");
-    accum += temp[temp.size() - 1];
+    if(temp[temp.size() - 1] != '}')
+        accum += temp[temp.size() - 1];
     res += accum;
 
     return TemplateRenderEither::Right(res);
