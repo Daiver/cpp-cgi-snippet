@@ -1,11 +1,6 @@
+#include "functor.h"
 
 namespace functional {
-
-template<typename Out, typename Middle, typename In, Out F(Middle), Middle G(In)>
-Out staticCompose(In x)
-{
-    return F(G(x));
-}
 
 template <typename MonadType, typename InnerType>
 class Monad
@@ -14,30 +9,20 @@ class Monad
         typedef MonadType (*BindFunc )(InnerType);
         typedef InnerType (*InnerFunc)(InnerType);
 
-        struct BindFunctor
-        {
-            BindFunc f;
-            BindFunctor(BindFunc f) {this->f = f;}
-            MonadType operator ()(InnerType x) const {return f(x);}
-        };
-
-        struct InnerFunctor
-        {
-            InnerFunc f;
-            InnerFunctor(InnerFunc f) {this->f = f;}
-            MonadType operator ()(InnerType x) const {return MonadType::mreturn(f(x));}
-        };
-
         static MonadType mreturn(InnerType) {throw "Not Implemented!";}
 
         inline MonadType bind(BindFunc f) const
         {
-            return this->bind(BindFunctor(f));
+            return this->bind(f);
         }
 
         inline MonadType map(InnerFunc f)
         {
-            return (*(MonadType*)this).bind(InnerFunctor(f));
+            return (*(MonadType*)this).bind(
+                        staticCompose<MonadType, InnerType, 
+                            MonadType (*)(InnerType), InnerType (*)(InnerType)>
+                                (MonadType::mreturn, f)
+                    );
         }
 };
 
