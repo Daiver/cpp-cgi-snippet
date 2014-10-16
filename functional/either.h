@@ -1,5 +1,7 @@
-#include "monad.h"
+#ifndef __EITHER_H__
+#define __EITHER_H__
 
+#include "monad.h"
 
 namespace functional {
 
@@ -64,3 +66,4 @@ class Either : public Monad<Either<LeftType, RightType>, RightType>
 };
 
 }
+#endif

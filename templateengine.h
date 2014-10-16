@@ -4,6 +4,7 @@
 #include <string>
 #include <map>
 
+#include "functional/either.h"
 #include "commoncgi.h"
 
 namespace cgi {
