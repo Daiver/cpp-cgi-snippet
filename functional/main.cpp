@@ -38,12 +38,21 @@ bool test04()
     return (e.map(f).isLeft) && (e.map(f).getLeft() == '1');
 }
 
+bool test05()
+{
+    typedef functional::Either<std::string, int> E;
+    E e = E::Right(40) >> f1 >> f1;
+    return 1;//(!e.isLeft) && e.getValue() == 5;
+}
+
+
 int main()
 {
     if(!test01()) std::cout << "fail test01" << std::endl;
     if(!test02()) std::cout << "fail test02" << std::endl;
     if(!test03()) std::cout << "fail test03" << std::endl;
     if(!test04()) std::cout << "fail test04" << std::endl;
+    if(!test05()) std::cout << "fail test05" << std::endl;
     std::cout << "End\n";
     return 0;
 }

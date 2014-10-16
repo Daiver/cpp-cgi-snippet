@@ -24,6 +24,17 @@ class Monad
                                 (MonadType::mreturn, f)
                     );
         }
+
+        template<class F>
+        inline MonadType operator>> (F f)
+        {
+            return ((MonadType*)(this))->bind(f);
+        }
+
+        /*inline MonadType operator>>= (BindFunc f)
+        {
+            return this->bind(f);
+        }*/
 };
 
 }

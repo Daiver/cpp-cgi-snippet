@@ -6,7 +6,7 @@ class MonoFunctor {
 public:
     F f;
     MonoFunctor(F f){this->f = f;};
-    Out operator()(In x){return f(x);}
+    inline Out operator()(In x) const {return f(x);}
 };
 
 
@@ -23,7 +23,7 @@ public:
     F f;
     G g;
     ComposeFunctor(F f, G g):f(f), g(g) {}
-    Out operator()(In x){return f(g(x));}
+    inline Out operator()(In x) const {return f(g(x));}
 };
 
 template<typename Out, typename In, class F, class G>
