@@ -31,6 +31,7 @@
             data: serialize({'resource': "items"}),
         }).done(function(data) {
             console.log("data", data);
+            $("#textarea").val(data);
         });
     });
     </script>
@@ -42,6 +43,10 @@
 
 <p>This is my web page. And {{someVar}}</p>
 <input type=button value="Click Me" id="btn" />
+
+<textarea id=textarea>
+
+</textarea>
 
 </body>
 
