@@ -22,10 +22,14 @@ int main(int argc, char **argv)
     cgi::RequestArgs cont;
     cont["someVar"] = "YEP!";
     if(args.count("resource")){//process rest
-        if(args.count("id")){
-            std::string filePath = pathToExe + "../data/" + args["id"] + ".txt";
-            std::string data = replaceString(readFile(filePath), "\n", "\\n");
-            std::cout << "{\"text\": \"" + data + "\"}";
+        if(args["resource"] == "notes" && args.count("id")){
+            if(request.requestType() == cgi::REQUEST_GET){
+                std::string filePath = pathToExe + "../data/" + args["id"] + ".txt";
+                std::string data = replaceString(readFile(filePath), "\n", "\\n");
+                std::cout << "{\"text\": \"" + data + "\"}";
+            }else if(request.requestType() == cgi::REQUEST_POST){
+                writeFile("2.txt", args["data"]);
+            }
         }
     }else{
         std::cout << 

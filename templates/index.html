@@ -28,12 +28,22 @@
         $.ajax({
             url: "main",
             method: "GET",
-            data: serialize({'resource': "items", 'id':'1'}),
+            data: serialize({'resource': "notes", 'id':'1'}),
             dataType:"text",
         }).done(function(data) {
             console.log("data", data);
             j = JSON.parse(data);
             $("#textarea").val(j['text']);
+        });
+
+        $("#button").click(function (){
+            $.ajax({
+                url: "main",
+                method: "POST",
+                data: serialize({'resource': "notes", 'id':'1', 'data' : $("#textarea").val()}),
+                dataType:"text",
+            });
+           
         });
     });
     </script>

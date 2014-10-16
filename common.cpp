@@ -21,3 +21,9 @@ std::string readFile(const std::string &fileName)
     infile.close( ) ;
     return res;
 }
+
+void writeFile(const std::string &fileName, const std::string &s)
+{
+    std::ofstream out(fileName.c_str());
+    out << s;
+}
