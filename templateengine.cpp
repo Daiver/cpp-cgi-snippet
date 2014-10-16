@@ -23,6 +23,8 @@ TemplateRenderEither TemplateEngine::renderTemplate(const std::string &temp,
         }else if(a == '{' && b == a && curState == PARSE_IDENT){
             return TemplateRenderEither::Left("Bad brackets inside ident name");
         }else if(a == '}' && b == a && curState == PARSE_IDENT){
+            if(!args.count(accum))
+                return TemplateRenderEither::Left("Bad var name: " + accum);
             res += args.at(accum);
             accum = "";
             curState = PARSE_TEXT;

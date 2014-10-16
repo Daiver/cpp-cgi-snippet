@@ -2,6 +2,8 @@
 #include <iostream>
 #include <string>
 
+#include "../minitest.h"
+
 functional::Either<std::string, int> f1(int i)
 {
     if(i % 2 == 0)
@@ -9,16 +11,16 @@ functional::Either<std::string, int> f1(int i)
     return functional::Either<std::string, int>::Left(std::string("bad num"));
 }
 
-bool test01()
+void test01()
 {
     functional::Either<std::string, int> e = functional::Either<std::string, int>::Right(20).bind(f1).bind(f1);
-    return (!e.isLeft) && (e.getValue() == 5);
+    ASSERT( (!e.isLeft) && (e.getValue() == 5));
 }
 
-bool test02()
+void test02()
 {
     functional::Either<std::string, int> e = functional::Either<std::string, int>::Right(20).bind(f1).bind(f1).bind(f1);
-    return (e.isLeft) ;
+    ASSERT( (e.isLeft) );
 }
 
 int f(int i)
@@ -26,33 +28,32 @@ int f(int i)
     return i * 10;
 }
 
-bool test03()
+void test03()
 {
     functional::Either<char, int> e = functional::Either<char, int>::Right(100);
-    return (!e.map(f).isLeft) && (e.map(f).getValue() == 1000);
+    ASSERT( (!e.map(f).isLeft) && (e.map(f).getValue() == 1000));
 }
 
-bool test04()
+void test04()
 {
     functional::Either<char, int> e = functional::Either<char, int>::Left('1');
-    return (e.map(f).isLeft) && (e.map(f).getLeft() == '1');
+    ASSERT( (e.map(f).isLeft) && (e.map(f).getLeft() == '1'));
 }
 
-bool test05()
+void test05()
 {
     typedef functional::Either<std::string, int> E;
-    E e = E::Right(40) >> f1 >> f1;
-    return 1;//(!e.isLeft) && e.getValue() == 5;
+    E e = E::Right(40) >> f1 >> f1 >> f1;
+    ASSERT((!e.isLeft) && e.getValue() == 5);
 }
 
 
 int main()
 {
-    if(!test01()) std::cout << "fail test01" << std::endl;
-    if(!test02()) std::cout << "fail test02" << std::endl;
-    if(!test03()) std::cout << "fail test03" << std::endl;
-    if(!test04()) std::cout << "fail test04" << std::endl;
-    if(!test05()) std::cout << "fail test05" << std::endl;
-    std::cout << "End\n";
+    RUN_TEST(test01);
+    RUN_TEST(test02);
+    RUN_TEST(test03);
+    RUN_TEST(test04);
+    RUN_TEST(test05);
     return 0;
 }
