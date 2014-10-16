@@ -3,7 +3,7 @@
 #include <iostream>
 
 using namespace cgi;
-std::string TemplateEngine::renderTemplate(const std::string &temp, 
+TemplateRenderEither TemplateEngine::renderTemplate(const std::string &temp, 
         const RequestArgs &args)
 {
     std::string res;
@@ -31,5 +31,5 @@ std::string TemplateEngine::renderTemplate(const std::string &temp,
     }
     res += accum;
 
-    return res;
+    return TemplateRenderEither::Right(res);
 }

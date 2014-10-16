@@ -19,7 +19,7 @@ int main()
         std::cout << "{" + args["resource"] + "}";
     }else{
         std::cout << 
-            cgi::TemplateEngine::renderTemplate(readFile("../templates/index.html"), cont);
+            cgi::TemplateEngine::renderTemplate(readFile("../templates/index.html"), cont).getValue();
     }
     return 1;
 }

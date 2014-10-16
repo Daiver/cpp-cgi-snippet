@@ -9,9 +9,10 @@
 
 namespace cgi {
 
+typedef functional::Either<std::string, std::string> TemplateRenderEither;
 class TemplateEngine{
     public:
-        static std::string renderTemplate(
+        static TemplateRenderEither renderTemplate(
                 const std::string &temp,
                 const RequestArgs &args);
 };
