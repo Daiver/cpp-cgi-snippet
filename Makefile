@@ -3,11 +3,9 @@
 #CPP = clang++
 CPP = g++
 
-bin/main: .FORCE bin/main.o
-	$(CPP) -g -o bin/main bin/*.o
-
-bin/main.o: bin/requesthandler.o bin/common.o bin/getpost.o bin/templateengine.o
-	$(CPP) -c -o bin/main.o main.cpp 
+bin/main: .FORCE bin/requesthandler.o bin/common.o bin/getpost.o bin/templateengine.o
+	$(CPP) -o bin/main main.cpp bin/*.o
+	$(CPP) -o bin/tests tests.cpp bin/*.o && ./bin/tests
 
 bin/requesthandler.o: bin/getpost.o
 	$(CPP) -c -o bin/requesthandler.o requesthandler.cpp 
