@@ -42,7 +42,9 @@
                 method: "POST",
                 data: serialize({'resource': "notes", 'id':'1', 'data' : $("#textarea").val()}),
                 dataType:"text",
-            });
+                }).done(function (data){
+                    console.log(data);
+                    });
            
         });
     });

@@ -29,6 +29,7 @@ int main(int argc, char **argv)
                 std::cout << "{\"text\": \"" + data + "\"}";
             }else if(request.requestType() == cgi::REQUEST_POST){
                 writeFile("2.txt", args["data"]);
+                std::cout << "ok " << args["data"]
             }
         }
     }else{
