@@ -35,6 +35,7 @@ void initializeGet(std::map <std::string, std::string> &Get)
     std::string *tmpstr = &tmpkey;
     register char* raw_get = getenv("QUERY_STRING");
     if (raw_get==NULL) {
+        printf("here1\n");
         Get.clear();
         return;
     }

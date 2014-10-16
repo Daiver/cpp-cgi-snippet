@@ -5,6 +5,8 @@ using namespace cgi;
 RequestMethod RequestHandler::requestType() const
 {
     char *methType = getenv("REQUEST_METHOD");
+    if(methType == NULL)
+        return REQUEST_UNKNOWN;
     if(strcmp(methType, "GET") == 0)
         return REQUEST_GET;
     if(strcmp(methType, "POST") == 0)
