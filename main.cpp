@@ -23,7 +23,7 @@ int main(int argc, char **argv)
     cont["someVar"] = "YEP!";
     if(args.count("resource")){//process rest
         std::cout << "def";
-        std::cout << "{" + args["resource"] + "}";
+        std::cout << "{text: " + args["resource"] + "}";
     }else{
         std::cout << 
             cgi::TemplateEngine::renderTemplate(readFile(pathToExe + "../templates/index.html"), cont).getValue();
