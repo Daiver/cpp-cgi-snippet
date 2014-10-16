@@ -22,7 +22,11 @@ int main(int argc, char **argv)
     cgi::RequestArgs cont;
     cont["someVar"] = "YEP!";
     if(args.count("resource")){//process rest
-        std::cout << "{\"text\": \"" + args["resource"] + "\"}";
+        if(args.count("id")){
+            std::string filePath = pathToExe + "../data/" + args["id"] + ".txt";
+            std::string data = readFile(filePath);
+            std::cout << "{\"text\": \"" + data + "\"}";
+        }
     }else{
         std::cout << 
             cgi::TemplateEngine::renderTemplate(readFile(pathToExe + "../templates/index.html"), cont).getValue();

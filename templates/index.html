@@ -28,11 +28,12 @@
         $.ajax({
             url: "main",
             method: "GET",
-            data: serialize({'resource': "items"}),
+            data: serialize({'resource': "items", 'id':'1'}),
             dataType:"text",
         }).done(function(data) {
             console.log("data", data);
-            $("#textarea").val(data);
+            j = JSON.parse(data);
+            $("#textarea").val(j['text']);
         });
     });
     </script>
