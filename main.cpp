@@ -2,6 +2,7 @@
 #include <iostream>
 
 #include "requesthandler.h"
+#include "responsehandler.h"
 #include "common.h"
 #include "functional/either.h"
 #include "templateengine.h"
@@ -16,10 +17,9 @@ int main(int argc, char **argv)
 {
     std::string pathToExe = getPathToExe(argv[0]);
 
-    writeFile("1.txt", "1234");
-
-    printf("Status: 200\nContent-type: text/html\n\n");
+    //printf("Status: 200\nContent-type: text/html\n\n");
     cgi::RequestHandler request;
+    cgi::ResponseHandler response;
     cgi::RequestArgs args = request.getArgs();
     cgi::RequestArgs cont;
     cont["someVar"] = "YEP!";
@@ -28,15 +28,16 @@ int main(int argc, char **argv)
             if(request.requestType() == cgi::REQUEST_GET){
                 std::string filePath = pathToExe + "../data/" + args["id"] + ".txt";
                 std::string data = replaceString(readFile(filePath), "\n", "\\n");
-                std::cout << "{\"text\": \"" + data + "\"}";
+                response << "{\"text\": \"" + data + "\"}";
             }else if(request.requestType() == cgi::REQUEST_POST){
                 writeFile("../data/1.txt", args["data"]);
-                std::cout << "ok " << args["data"];
+                response << "ok" + args["data"];
             }
         }
     }else{
-        std::cout << 
+        response << 
             cgi::TemplateEngine::renderTemplate(readFile(pathToExe + "../templates/index.html"), cont).getValue();
     }
+    response.send();
     return 1;
 }

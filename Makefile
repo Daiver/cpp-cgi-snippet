@@ -3,7 +3,7 @@
 #CPP = clang++
 CPP = g++
 
-bin/main: .FORCE bin/requesthandler.o bin/common.o bin/getpost.o bin/templateengine.o
+bin/main: .FORCE bin/requesthandler.o bin/common.o bin/getpost.o bin/templateengine.o bin/responsehandler.o
 	$(CPP) -o bin/main main.cpp bin/*.o
 	$(CPP) -o bin/tests tests.cpp bin/*.o && ./bin/tests
 
@@ -19,9 +19,12 @@ bin/common.o:
 bin/getpost.o:
 	$(CPP) -c -o bin/getpost.o getpost.cpp
 
+bin/responsehandler.o:
+	$(CPP) -c -o bin/responsehandler.o responsehandler.cpp
+
 clean:
 	-rm bin/main  bin/*.o 
-	-makdir bin/
+	-mkdir bin/
 
 .FORCE:
 	make clean
