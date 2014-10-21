@@ -16,6 +16,8 @@ int main(int argc, char **argv)
 {
     std::string pathToExe = getPathToExe(argv[0]);
 
+    writeFile("1.txt", "1234");
+
     printf("Status: 200\nContent-type: text/html\n\n");
     cgi::RequestHandler request;
     cgi::RequestArgs args = request.getArgs();
@@ -29,7 +31,7 @@ int main(int argc, char **argv)
                 std::cout << "{\"text\": \"" + data + "\"}";
             }else if(request.requestType() == cgi::REQUEST_POST){
                 writeFile("2.txt", args["data"]);
-                std::cout << "ok " << args["data"]
+                std::cout << "ok " << args["data"];
             }
         }
     }else{
