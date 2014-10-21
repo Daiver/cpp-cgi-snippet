@@ -30,7 +30,7 @@ int main(int argc, char **argv)
                 std::string data = replaceString(readFile(filePath), "\n", "\\n");
                 std::cout << "{\"text\": \"" + data + "\"}";
             }else if(request.requestType() == cgi::REQUEST_POST){
-                writeFile("2.txt", args["data"]);
+                writeFile("../data/1.txt", args["data"]);
                 std::cout << "ok " << args["data"];
             }
         }
