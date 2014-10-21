@@ -21,6 +21,7 @@ bin/getpost.o:
 
 clean:
 	-rm bin/main  bin/*.o 
+	-makdir bin/
 
 .FORCE:
 	make clean

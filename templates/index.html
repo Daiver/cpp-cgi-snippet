@@ -40,7 +40,7 @@
             $.ajax({
                 url: "main",
                 method: "POST",
-                data: serialize({'resource': "notes", 'id':'1', 'data' : $("#textarea").val().split('\n').join('\\n')}),
+                data: serialize({'resource': "notes", 'id':'1', 'data' : $("#textarea").val()}),
                 dataType:"text",
                 }).done(function (data){
                     console.log(data);
