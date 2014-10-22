@@ -7,6 +7,7 @@
 #include "functional/either.h"
 #include "templateengine.h"
 #include "sqlworker.h"
+#include "mysqlworker.h"
 
 std::string getPathToExe(std::string argv0)
 {

@@ -8,7 +8,8 @@
 class SQLWorker
 {
 public:
-    typedef functional::Either<std::string, std::vector<std::vector<std::string> > > SQLQueryResult;
+    typedef std::vector<std::vector<std::string> > VectorOfVectorOfString;
+    typedef functional::Either<std::string, VectorOfVectorOfString > SQLQueryResult;
 
     virtual bool isConnected() const = 0;
     virtual SQLQueryResult query(const std::string &qu) const = 0;

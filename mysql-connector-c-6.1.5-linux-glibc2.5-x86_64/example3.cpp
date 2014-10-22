@@ -18,7 +18,8 @@ int main(int argc, char **argv)
       exit(1);
   }  
 
-  if (mysql_real_connect(con, "localhost", "root", "123", 
+  //if (mysql_real_connect(con, "localhost", "root", "123", 
+  if (mysql_real_connect(con, "192.168.10.101", "root", "123", 
           "pract", 0, NULL, 0) == NULL) 
   {
       finish_with_error(con);
