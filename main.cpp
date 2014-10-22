@@ -6,6 +6,7 @@
 #include "common.h"
 #include "functional/either.h"
 #include "templateengine.h"
+#include "sqlworker.h"
 
 std::string getPathToExe(std::string argv0)
 {
