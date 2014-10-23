@@ -44,18 +44,22 @@ MySQLWorker::ConnectionResult MySQLWorker::connect(const std::string &server, co
 
 SQLWorker::SQLQueryResult MySQLWorker::query(const std::string &qu) const
 {
-    if (mysql_query(connection, "select * from t;")) {
+    if (mysql_query(connection, qu.c_str())) {
         char err[256];
         sprintf(err, "MySQL cannot execute query error: %s\n", mysql_error(connection));
         return SQLQueryResult::Left(err);
     }
 
     MYSQL_RES *result = mysql_store_result(connection);
+    VectorOfVectorOfString res;
 
     if (result == NULL) 
     {
         char err[256];
-        sprintf(err, "MySQL cannot store result error: %s\n", mysql_error(connection));
+        const char *errMsg = mysql_error(connection);
+        if(strlen(errMsg) == 0)
+            return SQLQueryResult::Right(res);
+        sprintf(err, "MySQL cannot store result error: %s\n", errMsg);
         return SQLQueryResult::Left(err);
     }
 
@@ -63,7 +67,6 @@ SQLWorker::SQLQueryResult MySQLWorker::query(const std::string &qu) const
 
     MYSQL_ROW row;
 
-    VectorOfVectorOfString res;
 
     while ((row = mysql_fetch_row(result))) 
     { 
