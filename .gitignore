@@ -34,3 +34,4 @@
 #
 bin/*
 functional/bin/*
+orm/bin/*

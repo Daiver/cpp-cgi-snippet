@@ -4,6 +4,7 @@
 #include <map>
 
 #include "minitest.h"
+#include "common.h"
 #include "commoncgi.h"
 #include "templateengine.h"
 #include "mysqlworker.h"
@@ -75,12 +76,7 @@ void testDB02()
     ASSERT(!res2.isLeft);
     ASSERT(!res3.isLeft);
     ASSERT(!res4.isLeft);
-    for(int i = 0; i < res3.getValue().size(); ++i){
-        for(int j = 0; j < res3.getValue()[i].size(); ++j){
-            printf("%s ", res3.getValue()[i][j].c_str());
-        }
-        printf("\n");
-    }//*/
+    SQLWorker::VectorOfVectorOfString res = res3.getValue();
 }
 
 void dataBaseTests()
@@ -103,12 +99,29 @@ void dataBaseTests()
     }
 }
 
+void testCompareVectors01()
+{
+    std::vector<int> v1;
+    std::vector<int> v2;
+    v1.push_back(1);
+    v1.push_back(2);
+    v1.push_back(3);
+    v2.push_back(1);
+    v2.push_back(2);
+    v2.push_back(3);
+    ASSERT(isVectorsAreTheSame(v1, v2));
+    v2.push_back(4);
+    v1.push_back(6);
+    ASSERT(!isVectorsAreTheSame(v1, v2));
+}
+
 int main()
 {
     RUN_TEST(testTemplateEngine01);
     RUN_TEST(testTemplateEngine02);
     RUN_TEST(testTemplateEngine03);
     RUN_TEST(testTemplateEngine04);
+    RUN_TEST(testCompareVectors01);
     dataBaseTests();
     return 0;
 }
