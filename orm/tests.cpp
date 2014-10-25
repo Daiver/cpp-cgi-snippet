@@ -14,8 +14,16 @@ void testExport01()
     ASSERT(db.getClassName<TestCl>() == "TestCl");
 }
 
+void testField01()
+{
+    int i = 10;
+    orm::OrmField<int> f = ORM_MODEL_FIELD(i);
+    ASSERT(f.fieldValue == 10);
+    ASSERT(f.fieldName == "i");
+}
 int main()
 {
     RUN_TEST(testExport01);
+    RUN_TEST(testField01);
     return 0;
 }

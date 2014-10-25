@@ -1,10 +1,19 @@
 .PHONY: all clean .FORCE
 
-bin/tests: .FORCE bin/orm.o
-	g++ -o bin/tests tests.cpp bin/orm.o
+#CPP = "g++"
+CPP = "clang++"
+
+bin/tests: .FORCE bin/orm.o bin/database.o bin/ormfield.o
+	$(CPP) -o bin/tests tests.cpp bin/*.o
 
 bin/orm.o:
-	g++ -c -o bin/orm.o orm.cpp
+	$(CPP) -c -o bin/orm.o orm.cpp
+
+bin/database.o:
+	$(CPP) -c -o bin/database.o database.cpp
+
+bin/ormfield.o:
+	$(CPP) -c -o bin/ormfield.o ormfield.cpp
 
 clean:
 	-rm bin/tests  bin/*.o 

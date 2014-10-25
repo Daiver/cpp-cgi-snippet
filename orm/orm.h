@@ -17,6 +17,9 @@
         {return #ClassName ; } \
     }
 
+#define ORM_MODEL_FIELD(Field) \
+    orm::OrmField<TYPEOF(Field)>(Field, #Field);
+
 namespace orm {
 
 }

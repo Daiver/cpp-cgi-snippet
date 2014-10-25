@@ -6,6 +6,8 @@
 
 #include "ormfield.h"
 
+#include "../sqlworker.h"
+
 namespace orm {
 class Database
 {
@@ -15,6 +17,8 @@ public:
 
     template <typename ModelClass>
     void registerModel();
+
+    void createScheme();
 
     std::vector<std::string> modelNames;
 };

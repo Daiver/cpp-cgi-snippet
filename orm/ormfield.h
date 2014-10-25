@@ -5,6 +5,9 @@
 
 namespace orm{
 
+    template <typename TypeName>
+    std::string getSQLTypeName();
+
 template<typename FieldType>
 class OrmField
 {
@@ -14,6 +17,7 @@ public:
         this->fieldName = fieldName;
         this->fieldValue = fieldValue;
     }
+
 
     std::string fieldName;
     FieldType fieldValue;
