@@ -18,10 +18,18 @@ public:
         this->fieldValue = fieldValue;
     }
 
+    std::pair<std::string, std::string> getSQLNameAndType();
 
     std::string fieldName;
     FieldType fieldValue;
 };
+}
+
+
+template<typename FieldType>
+std::pair<std::string, std::string> orm::OrmField<FieldType>::getSQLNameAndType()
+{
+    return std::make_pair(this->fieldName, getSQLTypeName<FieldType>());
 }
 
 #endif
