@@ -57,6 +57,9 @@ public:
 
     void createScheme();
 
+    template<typename ModelClass>
+    void newInst(ModelClass &obj);
+
     SQLWorker *sqlWorker;
     std::vector<ModelScheme> models;
 };
@@ -76,6 +79,12 @@ template<typename ModelClass>
 void orm::Database::registerModel()
 {
     models.push_back(this->getSchemeFromModelClass<ModelClass>());
+}
+
+template<typename ModelClass>
+void orm::Database::newInst(ModelClass &obj)
+{
+
 }
 
 #endif
