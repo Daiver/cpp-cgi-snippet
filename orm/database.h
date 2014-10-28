@@ -8,6 +8,7 @@
 #include "ormfield.h"
 
 #include "../sqlworker.h"
+#include "../functional/tripple.h"
 
 namespace orm {
 
