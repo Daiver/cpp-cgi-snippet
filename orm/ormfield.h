@@ -2,11 +2,21 @@
 #define __ORM_FIELD_H__
 
 #include <string>
+#include <sstream>
+#include "../functional/tripple.h"
 
 namespace orm{
 
-    template <typename TypeName>
-    std::string getSQLTypeName();
+template <typename TypeName>
+std::string getSQLTypeName();
+
+template <typename TypeName>
+std::string sqlTypeToString(TypeName val)
+{
+    std::stringstream ss;
+    ss << val;
+    return ss.str();
+}
 
 template<typename FieldType>
 class OrmField
@@ -18,7 +28,7 @@ public:
         this->fieldValue = fieldValue;
     }
 
-    std::pair<std::string, std::string> getSQLNameAndType();
+    functional::Tripple<std::string, std::string, std::string> getSQLNameTypeAndVal();
 
     std::string fieldName;
     FieldType fieldValue;
@@ -27,9 +37,10 @@ public:
 
 
 template<typename FieldType>
-std::pair<std::string, std::string> orm::OrmField<FieldType>::getSQLNameAndType()
+functional::Tripple<std::string, std::string, std::string> 
+    orm::OrmField<FieldType>::getSQLNameTypeAndVal()
 {
-    return std::make_pair(this->fieldName, getSQLTypeName<FieldType>());
+    return functional::makeTripple(this->fieldName, getSQLTypeName<FieldType>(), std::string(""));
 }
 
 #endif

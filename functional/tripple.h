@@ -13,5 +13,11 @@ public:
     T3 third;
 };
 
+template<typename T1, typename T2, typename T3>
+inline Tripple<T1, T2, T3> makeTripple(const T1 &t1, const T2 &t2, const T3 &t3)
+{
+    return Tripple<T1, T2, T3>(t1, t2, t3);
+}
+
 }
 #endif

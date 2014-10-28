@@ -6,10 +6,10 @@ class TestCl
 public:
     int i;
     std::string s;
-    void initOrm(std::vector<std::pair<std::string, std::string> > *fields)
+    void initOrm(std::vector<functional::Tripple<std::string, std::string, std::string> > *fields)
     {
-        fields->push_back(ORM_MODEL_FIELD(i).getSQLNameAndType());
-        fields->push_back(ORM_MODEL_FIELD(s).getSQLNameAndType());
+        fields->push_back(ORM_MODEL_FIELD(i).getSQLNameTypeAndVal());
+        fields->push_back(ORM_MODEL_FIELD(s).getSQLNameTypeAndVal());
     }
 };
 ORM_EXPORT_CLASS(TestCl);

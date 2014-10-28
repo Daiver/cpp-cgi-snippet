@@ -20,7 +20,7 @@ class ModelScheme{
 public:
 
     std::string modelName;
-    std::vector<std::pair<std::string, std::string> > fields;
+    std::vector<functional::Tripple<std::string, std::string, std::string> > fields;
 
     static std::string ormIdPrefix;
 

@@ -1,7 +1,7 @@
 .PHONY: all clean .FORCE
 
-CPP = "g++"
-#CPP = "clang++"
+#CPP = "g++"
+CPP = "clang++"
 
 bin/tests: .FORCE bin/orm.o bin/database.o bin/ormfield.o
 	$(CPP) -o bin/tests tests.cpp bin/*.o

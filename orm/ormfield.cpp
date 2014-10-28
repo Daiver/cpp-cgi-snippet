@@ -20,4 +20,10 @@ std::string getSQLTypeName<std::string>()
     return "VARCHAR(256)";
 }
 
+/*template<>
+std::string sqlTypeToString<int>(int val)
+{
+
+}*/
+
 }
