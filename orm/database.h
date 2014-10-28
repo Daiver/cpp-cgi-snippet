@@ -39,6 +39,11 @@ public:
 
         return stringStream.str();
     }
+
+    std::string getInsertQuery() const
+    {
+        return "";
+    }
 };
 
 class Database
@@ -86,6 +91,11 @@ template<typename ModelClass>
 void orm::Database::newInst(ModelClass &obj)
 {
 
+    ModelScheme scheme;
+    scheme.modelName = getClassName<ModelClass>();
+    obj.initOrm(&scheme.fields);
+
+    sqlWorker->query(scheme.getInsertQuery());
 }
 
 #endif
