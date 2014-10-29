@@ -4,6 +4,12 @@
 class TestCl
 {
 public:
+    TestCl()
+    {
+        this->i = 10;
+        this->s = "zero";
+    }
+
     int i;
     std::string s;
     void initOrm(std::vector<functional::Tripple<std::string, std::string, std::string> > *fields)
@@ -41,8 +47,7 @@ void testField03()
     orm::Database db;
     db.registerModel<TestCl>();
     std::string q = db.models[0].getInsertQuery();
-    std::cout << "\n" << q << "\n";
-    ASSERT(q == "INSERT INTO `TestCl` VALUES(671529672, '');");
+    ASSERT(q == "INSERT INTO `TestCl` VALUES(10, 'zero');");
 }
 
 
