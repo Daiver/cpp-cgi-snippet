@@ -40,7 +40,7 @@ template<typename FieldType>
 functional::Tripple<std::string, std::string, std::string> 
     orm::OrmField<FieldType>::getSQLNameTypeAndVal()
 {
-    return functional::makeTripple(this->fieldName, getSQLTypeName<FieldType>(), std::string(""));
+    return functional::makeTripple(this->fieldName, getSQLTypeName<FieldType>(), sqlTypeToString(this->fieldValue));
 }
 
 #endif

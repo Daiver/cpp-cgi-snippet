@@ -42,7 +42,13 @@ public:
 
     std::string getInsertQuery() const
     {
-        return "";
+        std::string res = "INSERT INTO `" + modelName + "` VALUES(" ;
+        res += fields[0].third;
+        for(int i = 1; i < fields.size(); ++i){
+            res += ", " + fields[i].third;
+        }
+        res += ");";
+        return res;
     }
 };
 

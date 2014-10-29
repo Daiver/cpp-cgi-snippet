@@ -36,10 +36,21 @@ void testField02()
     ASSERT(q == "CREATE TABLE `orm_model_TestCl` (`orm_id_TestCl` INT NOT NULL AUTO_INCREMENT, `i` INT, `s` VARCHAR(256), PRIMARY KEY(`orm_id_TestCl`));");
 }
 
+void testField03()
+{
+    orm::Database db;
+    db.registerModel<TestCl>();
+    std::string q = db.models[0].getInsertQuery();
+    std::cout << "\n" << q << "\n";
+    ASSERT(q == "INSERT INTO `TestCl` VALUES(671529672, '');");
+}
+
+
 int main()
 {
     RUN_TEST(testExport01);
     RUN_TEST(testField01);
     RUN_TEST(testField02);
+    RUN_TEST(testField03);
     return 0;
 }
