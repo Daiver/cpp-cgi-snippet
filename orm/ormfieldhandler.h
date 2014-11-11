@@ -20,6 +20,8 @@ public:
 
     bool fill;
     std::vector<functional::Tripple<std::string, std::string, std::string> > *fields;
+
+    void operator <<(int i){};
 };
 }
 
