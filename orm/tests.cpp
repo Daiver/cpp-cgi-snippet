@@ -58,6 +58,14 @@ void testField04()
     ASSERT_EQ(q, "UPDATE `orm_model_TestCl` SET i=10, s='zero' WHERE orm_id_TestCl=1");
 }
 
+void testField05()
+{
+    orm::Database db;
+    db.registerModel<TestCl>();
+    std::string q = db.models[0].getSelectByIdQuery(1);
+    ASSERT_EQ(q, "SELECT * FROM `orm_model_TestCl`");
+}
+
 
 int main()
 {
@@ -66,5 +74,6 @@ int main()
     RUN_TEST(testField02);
     RUN_TEST(testField03);
     RUN_TEST(testField04);
+    RUN_TEST(testField05);
     return 0;
 }

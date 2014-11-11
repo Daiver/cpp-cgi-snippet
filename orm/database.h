@@ -2,6 +2,7 @@
 #define __DATABASE_H__
 
 #include <string>
+#include <stdlib.h>
 #include <vector>
 #include <sstream>
 
@@ -68,6 +69,12 @@ public:
         res += " WHERE " + std::string(ORM_ID_PREFIX) + modelName + "=" + ss.str();
         return res;
     }
+
+    std::string getSelectByIdQuery(int id) const
+    {
+        std::string res = "SELECT * FROM `" + std::string(ORM_TABLE_PREFIX) + this->modelName + "`";
+        return res;
+    }
 };
 
 class Database
@@ -88,7 +95,10 @@ public:
     void createScheme();
 
     template<typename ModelClass>
-    void newInst(ModelClass &obj);
+    int newInst(ModelClass &obj);
+
+    template<typename ModelClass>
+    void updInst(int id, ModelClass &obj);
 
     SQLWorker *sqlWorker;
     std::vector<ModelScheme> models;
@@ -112,7 +122,7 @@ void orm::Database::registerModel()
 }
 
 template<typename ModelClass>
-void orm::Database::newInst(ModelClass &obj)
+int orm::Database::newInst(ModelClass &obj)
 {
 
     ModelScheme scheme;
@@ -120,6 +130,19 @@ void orm::Database::newInst(ModelClass &obj)
     obj.initOrm(&scheme.fields);
 
     sqlWorker->query(scheme.getInsertQuery());
+    return atoi(sqlWorker->query(std::string(ORM_TABLE_PREFIX) + scheme.modelName).getValue()[0][0].c_str());
 }
+
+template<typename ModelClass>
+void orm::Database::updInst(int id, ModelClass &obj)
+{
+
+    ModelScheme scheme;
+    scheme.modelName = getClassName<ModelClass>();
+    obj.initOrm(&scheme.fields);
+
+    sqlWorker->query(scheme.getUpdateQuery(id));
+}
+
 
 #endif
