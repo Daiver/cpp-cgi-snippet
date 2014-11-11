@@ -154,6 +154,9 @@ void testOrm02()
     ASSERT_EQ(r1.someIndex, t1.someIndex);
     ASSERT_EQ(r2.someIndex, t2.someIndex);
     ASSERT_EQ(r3.someIndex, t3.someIndex);
+
+    db.deleteInst<TestCLL>(id2);
+    ASSERT(db.getInstById<TestCLL>(id2).isLeft);
 }
 
 

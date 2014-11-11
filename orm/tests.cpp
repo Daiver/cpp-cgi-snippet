@@ -67,6 +67,15 @@ void testField05()
     ASSERT_EQ(q, "SELECT * FROM `orm_model_TestCl` WHERE orm_id_TestCl=1");
 }
 
+void testField06()
+{
+    orm::Database db;
+    db.registerModel<TestCl>();
+    std::string q = db.models[0].getDeleteQuery(10);
+    ASSERT_EQ(q, "DELETE FROM `orm_model_TestCl` WHERE orm_id_TestCl=10");
+}
+
+
 void testStream01()
 {
     int i = orm::sqlTypeFromString<int>("12");
@@ -81,6 +90,7 @@ int main()
     RUN_TEST(testField03);
     RUN_TEST(testField04);
     RUN_TEST(testField05);
+    RUN_TEST(testField06);
     RUN_TEST(testStream01);
     return 0;
 }

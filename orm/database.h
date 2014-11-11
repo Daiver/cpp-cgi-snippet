@@ -80,6 +80,14 @@ public:
         std::string res = "SELECT * FROM `" + std::string(ORM_TABLE_PREFIX) + this->modelName + "` WHERE " + std::string(ORM_ID_PREFIX) + this->modelName + "=" + ss.str();
         return res;
     }
+
+    std::string getDeleteQuery(int id) const
+    {
+        std::stringstream ss;
+        ss << id;
+        std::string res = "DELETE FROM `" + std::string(ORM_TABLE_PREFIX) + modelName + "` WHERE " + std::string(ORM_ID_PREFIX) + modelName + "=" + ss.str();
+        return res;
+    }
 };
 
 class Database
@@ -107,6 +115,9 @@ public:
 
     template<typename ModelClass>
     void updInst(int id, ModelClass &obj);
+
+    template<typename ModelClass>
+    void deleteInst(int id);
 
     template<typename ModelClass>
     functional::Either<std::string, ModelClass> getInstById(int id);
@@ -186,6 +197,20 @@ functional::Either<std::string, ModelClass> orm::Database::getInstById(int id)
     res.initOrm(handler);
 
     return functional::Either<std::string, ModelClass>::Right(res);
+}
+
+
+template<typename ModelClass>
+void orm::Database::deleteInst(int id)
+{
+    ModelClass res;
+    ModelScheme scheme;
+    scheme.modelName = getClassName<ModelClass>();
+    this->initScheme(res, &scheme);
+
+    std::string q = scheme.getDeleteQuery(id);
+    SQLWorker::SQLQueryResult ans = sqlWorker->query(q);
+   
 }
 
 #endif
