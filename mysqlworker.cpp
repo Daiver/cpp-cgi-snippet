@@ -44,9 +44,12 @@ MySQLWorker::ConnectionResult MySQLWorker::connect(const std::string &server, co
 
 SQLWorker::SQLQueryResult MySQLWorker::query(const std::string &qu) const
 {
+    //printf("Start\n");
     if (mysql_query(connection, qu.c_str())) {
         char err[256];
         sprintf(err, "MySQL cannot execute query error: %s\n", mysql_error(connection));
+        //printf("here %s\n", err);
+        //printf(">'%s'<\n", qu.c_str());
         return SQLQueryResult::Left(err);
     }
 
@@ -55,6 +58,7 @@ SQLWorker::SQLQueryResult MySQLWorker::query(const std::string &qu) const
 
     if (result == NULL) 
     {
+        //printf("here2\n");
         char err[256];
         const char *errMsg = mysql_error(connection);
         if(strlen(errMsg) == 0)
@@ -78,5 +82,6 @@ SQLWorker::SQLQueryResult MySQLWorker::query(const std::string &qu) const
     }
 
     mysql_free_result(result);
+    //printf("finish\n");
     return SQLQueryResult::Right(res);
 }

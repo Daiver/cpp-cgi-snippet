@@ -3,8 +3,10 @@
 
 #include <string>
 #include <stdlib.h>
+#include <stdio.h>
 #include <vector>
 #include <sstream>
+#include <iostream>
 
 #include "ormfield.h"
 #include "ormfieldhandler.h"
@@ -115,7 +117,7 @@ public:
 template<typename ModelClass>
 void orm::Database::initScheme(ModelClass &obj, ModelScheme *sch)
 {
-    obj.initOrm(&sch->fields);
+    obj.initOrm(OrmFieldHandler(&sch->fields));
 }
 
 template<typename ModelClass>
@@ -143,7 +145,11 @@ int orm::Database::newInst(ModelClass &obj)
     this->initScheme(obj, &scheme);
 
     sqlWorker->query(scheme.getInsertQuery());
-    return atoi(sqlWorker->query(std::string(ORM_TABLE_PREFIX) + scheme.modelName).getValue()[0][0].c_str());
+    return atoi(sqlWorker->query("SELECT LAST_INSERT_ID()"
+                    /*"SELECT " + std::string(ORM_ID_PREFIX) + 
+                    scheme.modelName + " FROM " +
+                    std::string(ORM_TABLE_PREFIX) + scheme.modelName*/
+                    ).getValue()[0][0].c_str());
 }
 
 template<typename ModelClass>
@@ -167,6 +173,13 @@ functional::Either<std::string, ModelClass> orm::Database::getInstById(int id)
     SQLWorker::SQLQueryResult ans = sqlWorker->query(scheme.getSelectByIdQuery(id));
     if(ans.isLeft)
         return functional::Either<std::string, ModelClass>::Left(ans.getLeft());
+
+    if(ans.getValue().size() != 1)
+        return functional::Either<std::string, ModelClass>::Left("Bad count of rows!");
+
+    std::vector<std::string> values = ans.getValue()[0];
+    OrmFieldHandler handler(NULL, &values, true);
+    res.initOrm(handler);
 
     return functional::Either<std::string, ModelClass>::Right(res);
 }

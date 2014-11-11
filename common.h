@@ -1,3 +1,6 @@
+#ifndef __COMMON_H__
+#define __COMMON_H__
+
 #include <string>
 #include <fstream>
 #include <vector>
@@ -33,4 +36,6 @@ bool isVectorsAreTheSame(const std::vector<T> &a, const std::vector<T> &b)
 
 #ifdef __GNUG__
 #define TYPEOF(x) __typeof__((x))
+#endif
+
 #endif

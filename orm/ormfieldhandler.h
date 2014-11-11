@@ -12,22 +12,25 @@ class OrmFieldHandler
 //FIX IT
 {
 public:
-    OrmFieldHandler(std::vector<functional::Tripple<std::string, std::string, std::string> > *fields, bool fillModel=false)
+    OrmFieldHandler(std::vector<functional::Tripple<std::string, std::string, std::string> > *fields, std::vector<std::string> *values=NULL, bool fillModel=false)
     {
         this->fields = fields;
         fill = fillModel;
-        counter = 0;
+        counter = 1;
+        this->values = values;
     }
 
     bool fill;
     int counter;
+    std::vector<std::string> *values;
     std::vector<functional::Tripple<std::string, std::string, std::string> > *fields;
 
     template<typename FieldType>
     void operator <<(OrmField<FieldType> ormField)
     {
         if(fill){
-            *ormField.fieldPointer = sqlTypeFromString<FieldType>((*fields)[counter]);
+            *ormField.fieldPointer = sqlTypeFromString<FieldType>((*values)[counter]);
+            ++counter;
         }else{
             fields->push_back(ormField.getSQLNameTypeAndVal());
         }

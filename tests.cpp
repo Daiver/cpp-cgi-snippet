@@ -8,6 +8,7 @@
 #include "commoncgi.h"
 #include "templateengine.h"
 #include "mysqlworker.h"
+#include "orm/orm.h"
 
 using namespace cgi;
 
@@ -79,6 +80,59 @@ void testDB02()
     SQLWorker::VectorOfVectorOfString res = res3.getValue();
 }
 
+class TestCLL
+{
+public:
+    void initOrm(orm::OrmFieldHandler handler)
+    {
+        handler << ORM_MODEL_FIELD(someIndex);
+        handler << ORM_MODEL_FIELD(name);
+    }
+
+    int someIndex;
+    std::string name;
+};
+ORM_EXPORT_CLASS(TestCLL);
+
+void testOrmCreation01()
+{
+    MySQLWorker mysql;
+    mysql.connect("192.168.10.101", "root", "123", "testDB");
+    ASSERT(mysql.isConnected());
+    orm::Database db(&mysql);
+    db.registerModel<TestCLL>();
+    db.createScheme();
+    TestCLL tmp;
+    tmp.someIndex = 5;
+    tmp.name = "Hello";
+    int id = db.newInst(tmp);
+
+    TestCLL tmp2;
+    functional::Either<std::string, TestCLL> res1 = db.getInstById<TestCLL>(id);
+    ASSERT(!res1.isLeft);
+    tmp2 = res1.getValue();
+
+    ASSERT_EQ(tmp2.someIndex, 5);
+    ASSERT_EQ(tmp2.name, "Hello");
+
+    TestCLL tmp3;
+    tmp3.name = "World";
+    tmp3.someIndex = 1;
+    db.updInst(id, tmp3);
+
+    functional::Either<std::string, TestCLL> res2 = db.getInstById<TestCLL>(id);
+    ASSERT(!res2.isLeft);
+    TestCLL tmp4 = res2.getValue();
+
+    ASSERT_EQ(tmp4.someIndex, 1);
+    ASSERT_EQ(tmp4.name, "World");
+
+
+    //std::cout << id << "\n";
+    //id = db.newInst(tmp);
+    //std::cout << id << "\n";
+}
+
 void dataBaseTests()
 {
     bool isPossibleToRunDBTests = false;
@@ -91,6 +145,7 @@ void dataBaseTests()
         printf("Yeah, running db tests\n");
         RUN_TEST(testDB01);
         RUN_TEST(testDB02);
+        RUN_TEST(testOrmCreation01);
         MySQLWorker mysql;
         mysql.connect("192.168.10.101", "root", "123", "pract");
         mysql.query("DROP DATABASE testDB");

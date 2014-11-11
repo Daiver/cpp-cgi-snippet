@@ -12,10 +12,11 @@ public:
 
     int i;
     std::string s;
-    void initOrm(std::vector<functional::Tripple<std::string, std::string, std::string> > *fields)
+    //void initOrm(std::vector<functional::Tripple<std::string, std::string, std::string> > *fields)
+    void initOrm(orm::OrmFieldHandler handler)
     {
-        fields->push_back(ORM_MODEL_FIELD(i));
-        fields->push_back(ORM_MODEL_FIELD(s));
+        handler << (ORM_MODEL_FIELD(i));
+        handler << (ORM_MODEL_FIELD(s));
     }
 };
 ORM_EXPORT_CLASS(TestCl);

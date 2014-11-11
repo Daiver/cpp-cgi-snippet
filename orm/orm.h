@@ -7,6 +7,7 @@
 #include "../sqlworker.h"
 
 #include "ormfield.h"
+#include "ormfieldhandler.h"
 #include "database.h"
 
 
@@ -18,7 +19,7 @@
     }
 
 #define ORM_MODEL_FIELD(Field) \
-    (orm::OrmField<TYPEOF(Field)>(Field, &Field, #Field).getSQLNameTypeAndVal())
+    (orm::OrmField<TYPEOF(Field)>(Field, &Field, #Field))
 
 namespace orm {
 
