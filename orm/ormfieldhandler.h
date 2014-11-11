@@ -16,12 +16,22 @@ public:
     {
         this->fields = fields;
         fill = fillModel;
+        counter = 0;
     }
 
     bool fill;
+    int counter;
     std::vector<functional::Tripple<std::string, std::string, std::string> > *fields;
 
-    void operator <<(int i){};
+    template<typename FieldType>
+    void operator <<(OrmField<FieldType> ormField)
+    {
+        if(fill){
+            *ormField.fieldPointer = sqlTypeFromString<FieldType>((*fields)[counter]);
+        }else{
+            fields->push_back(ormField.getSQLNameTypeAndVal());
+        }
+    }
 };
 }
 
