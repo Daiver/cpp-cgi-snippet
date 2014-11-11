@@ -26,4 +26,9 @@ std::string sqlTypeToString<std::string>(std::string val)
     return "'" + val + "'";
 }
 
+template<>
+std::string sqlTypeFromString(std::string val)
+{
+    return val;
+}
 }

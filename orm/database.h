@@ -75,7 +75,9 @@ public:
 
     std::string getSelectByIdQuery(int id) const
     {
-        std::string res = "SELECT * FROM `" + std::string(ORM_TABLE_PREFIX) + this->modelName + "`";
+        std::stringstream ss;
+        ss << id;
+        std::string res = "SELECT * FROM `" + std::string(ORM_TABLE_PREFIX) + this->modelName + "` WHERE " + std::string(ORM_ID_PREFIX) + this->modelName + "=" + ss.str();
         return res;
     }
 };
@@ -170,7 +172,9 @@ functional::Either<std::string, ModelClass> orm::Database::getInstById(int id)
     scheme.modelName = getClassName<ModelClass>();
     this->initScheme(res, &scheme);
 
-    SQLWorker::SQLQueryResult ans = sqlWorker->query(scheme.getSelectByIdQuery(id));
+    std::string q = scheme.getSelectByIdQuery(id);
+    //std::cout << q << std::endl;
+    SQLWorker::SQLQueryResult ans = sqlWorker->query(q);
     if(ans.isLeft)
         return functional::Either<std::string, ModelClass>::Left(ans.getLeft());
 

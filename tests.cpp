@@ -127,11 +127,35 @@ void testOrmCreation01()
     ASSERT_EQ(tmp4.someIndex, 1);
     ASSERT_EQ(tmp4.name, "World");
 
-
-    //std::cout << id << "\n";
-    //id = db.newInst(tmp);
-    //std::cout << id << "\n";
 }
+
+void testOrm02()
+{
+    MySQLWorker mysql;
+    mysql.connect("192.168.10.101", "root", "123", "testDB");
+    ASSERT(mysql.isConnected());
+    orm::Database db(&mysql);
+    db.registerModel<TestCLL>();
+    db.createScheme();
+    TestCLL t1, t2, t3, r1, r2 ,r3;
+    t1.someIndex = 1;
+    t2.someIndex = 2;
+    t3.someIndex = 3;
+    int id2 = db.newInst(t2);
+    int id3 = db.newInst(t3);
+    int id1 = db.newInst(t1);
+
+    //exit(1);
+
+    r1 = db.getInstById<TestCLL>(id1).getValue();
+    r3 = db.getInstById<TestCLL>(id3).getValue();
+    r2 = db.getInstById<TestCLL>(id2).getValue();
+    
+    ASSERT_EQ(r1.someIndex, t1.someIndex);
+    ASSERT_EQ(r2.someIndex, t2.someIndex);
+    ASSERT_EQ(r3.someIndex, t3.someIndex);
+}
+
 
 void dataBaseTests()
 {
@@ -146,6 +170,7 @@ void dataBaseTests()
         RUN_TEST(testDB01);
         RUN_TEST(testDB02);
         RUN_TEST(testOrmCreation01);
+        RUN_TEST(testOrm02);
         MySQLWorker mysql;
         mysql.connect("192.168.10.101", "root", "123", "pract");
         mysql.query("DROP DATABASE testDB");

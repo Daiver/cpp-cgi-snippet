@@ -64,7 +64,7 @@ void testField05()
     orm::Database db;
     db.registerModel<TestCl>();
     std::string q = db.models[0].getSelectByIdQuery(1);
-    ASSERT_EQ(q, "SELECT * FROM `orm_model_TestCl`");
+    ASSERT_EQ(q, "SELECT * FROM `orm_model_TestCl` WHERE orm_id_TestCl=1");
 }
 
 void testStream01()
