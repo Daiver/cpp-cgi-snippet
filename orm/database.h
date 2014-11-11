@@ -26,7 +26,6 @@ public:
 
     std::string getCreationTableQuery() const
     {
-        //CREATE TABLE `table1` (`user_id` INT(5) NOT NULL AUTO_INCREMENT, `username` VARCHAR(50), PRIMARY KEY(`user_id`), INDEX(`username`));
         std::ostringstream stringStream;
         stringStream << "CREATE TABLE `" << ORM_TABLE_PREFIX << modelName << "` (";
         stringStream << "`" << ORM_ID_PREFIX << modelName 
@@ -42,12 +41,31 @@ public:
 
     std::string getInsertQuery() const
     {
-        std::string res = "INSERT INTO `" + modelName + "` VALUES(" ;
+        std::string res = "INSERT INTO `" + std::string(ORM_TABLE_PREFIX) + modelName + "` (";// + "` VALUES(" ;
+        res += fields[0].first;
+        for(int i = 1; i < fields.size(); ++i){
+            res += ", " + fields[i].first;
+        }
+        res += ") VALUES(";
         res += fields[0].third;
         for(int i = 1; i < fields.size(); ++i){
             res += ", " + fields[i].third;
         }
         res += ");";
+        return res;
+    }
+
+    std::string getUpdateQuery(int id) const
+    {
+        std::string res = "UPDATE `" + std::string(ORM_TABLE_PREFIX) + modelName + "` SET " ;
+        res += fields[0].first + "=" + fields[0].third;
+        for(int i = 1; i < fields.size(); ++i){
+            res += ", " + fields[i].first + "=" + fields[i].third;
+        }
+        std::stringstream ss;
+        ss << id;
+
+        res += " WHERE " + std::string(ORM_ID_PREFIX) + modelName + "=" + ss.str();
         return res;
     }
 };

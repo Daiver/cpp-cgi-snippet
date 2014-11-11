@@ -47,7 +47,15 @@ void testField03()
     orm::Database db;
     db.registerModel<TestCl>();
     std::string q = db.models[0].getInsertQuery();
-    ASSERT(q == "INSERT INTO `TestCl` VALUES(10, 'zero');");
+    ASSERT_EQ(q, "INSERT INTO `orm_model_TestCl` (i, s) VALUES(10, 'zero');");
+}
+
+void testField04()
+{
+    orm::Database db;
+    db.registerModel<TestCl>();
+    std::string q = db.models[0].getUpdateQuery(1);
+    ASSERT_EQ(q, "UPDATE `orm_model_TestCl` SET i=10, s='zero' WHERE orm_id_TestCl=1");
 }
 
 
@@ -57,5 +65,6 @@ int main()
     RUN_TEST(testField01);
     RUN_TEST(testField02);
     RUN_TEST(testField03);
+    RUN_TEST(testField04);
     return 0;
 }
