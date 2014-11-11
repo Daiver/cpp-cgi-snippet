@@ -90,6 +90,9 @@ public:
     ModelScheme getSchemeFromModelClass();
 
     template <typename ModelClass>
+    void initScheme(ModelClass &obj, ModelScheme *sch);
+
+    template <typename ModelClass>
     void registerModel();
 
     void createScheme();
@@ -100,9 +103,18 @@ public:
     template<typename ModelClass>
     void updInst(int id, ModelClass &obj);
 
+    template<typename ModelClass>
+    functional::Either<std::string, ModelClass> getInstById(int id);
+
     SQLWorker *sqlWorker;
     std::vector<ModelScheme> models;
 };
+}
+
+template<typename ModelClass>
+void orm::Database::initScheme(ModelClass &obj, ModelScheme *sch)
+{
+    obj.initOrm(&sch->fields);
 }
 
 template<typename ModelClass>
@@ -111,7 +123,7 @@ orm::ModelScheme orm::Database::getSchemeFromModelClass()
     ModelScheme res;
     res.modelName = getClassName<ModelClass>();
     ModelClass tmpInst;
-    tmpInst.initOrm(&res.fields);
+    this->initScheme(tmpInst, &res);
     return res;
 }
 
@@ -127,7 +139,7 @@ int orm::Database::newInst(ModelClass &obj)
 
     ModelScheme scheme;
     scheme.modelName = getClassName<ModelClass>();
-    obj.initOrm(&scheme.fields);
+    this->initScheme(obj, &scheme);
 
     sqlWorker->query(scheme.getInsertQuery());
     return atoi(sqlWorker->query(std::string(ORM_TABLE_PREFIX) + scheme.modelName).getValue()[0][0].c_str());
@@ -136,13 +148,26 @@ int orm::Database::newInst(ModelClass &obj)
 template<typename ModelClass>
 void orm::Database::updInst(int id, ModelClass &obj)
 {
-
     ModelScheme scheme;
     scheme.modelName = getClassName<ModelClass>();
-    obj.initOrm(&scheme.fields);
+    this->initScheme(obj, &scheme);
 
     sqlWorker->query(scheme.getUpdateQuery(id));
 }
 
+template<typename ModelClass>
+functional::Either<std::string, ModelClass> orm::Database::getInstById(int id)
+{
+    ModelClass res;
+    ModelScheme scheme;
+    scheme.modelName = getClassName<ModelClass>();
+    this->initScheme(res, &scheme);
+
+    SQLWorker::SQLQueryResult ans = sqlWorker->query(scheme.getSelectByIdQuery(id));
+    if(ans.isLeft)
+        return functional::Either<std::string, ModelClass>::Left(ans.getLeft());
+
+    return functional::Either<std::string, ModelClass>::Right(res);
+}
 
 #endif

@@ -66,6 +66,11 @@ void testField05()
     ASSERT_EQ(q, "SELECT * FROM `orm_model_TestCl`");
 }
 
+void testStream01()
+{
+    int i = orm::sqlTypeFromString<int>("12");
+    ASSERT_EQ(i, 12);
+}
 
 int main()
 {
@@ -75,5 +80,6 @@ int main()
     RUN_TEST(testField03);
     RUN_TEST(testField04);
     RUN_TEST(testField05);
+    RUN_TEST(testStream01);
     return 0;
 }

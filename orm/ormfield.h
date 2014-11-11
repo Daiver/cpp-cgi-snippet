@@ -18,6 +18,15 @@ std::string sqlTypeToString(TypeName val)
     return ss.str();
 }
 
+template <typename TypeName>
+TypeName sqlTypeFromString(std::string val)
+{
+    std::istringstream iss(val);
+    TypeName t;
+    iss >> t;
+    return t;
+}
+
 template<typename FieldType>
 class OrmField
 {
