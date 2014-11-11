@@ -3,7 +3,7 @@
 #CPP = clang++
 CPP = g++
 
-bin/main: .FORCE bin/requesthandler.o bin/common.o bin/getpost.o bin/templateengine.o bin/responsehandler.o bin/mysqlworker.o bin/orm.o bin/database.o bin/ormfield.o
+bin/main: .FORCE bin/requesthandler.o bin/common.o bin/getpost.o bin/templateengine.o bin/responsehandler.o bin/mysqlworker.o bin/orm.o bin/database.o bin/ormfield.o bin/modelscheme.o
 	$(CPP) -o bin/main main.cpp bin/*.o \
 		mysql-connector-c-6.1.5-linux-glibc2.5-x86_64/lib/libmysqlclient.so.18.3.0 \
 		-Imysql-connector-c-6.1.5-linux-glibc2.5-x86_64/include
@@ -38,6 +38,9 @@ bin/ormfield.o:
 
 bin/database.o:
 	$(CPP) -c -o bin/database.o orm/database.cpp
+
+bin/modelscheme.o:
+	$(CPP) -c -o bin/modelscheme.o orm/modelscheme.cpp
 
 clean:
 	-rm bin/main  bin/*.o 
