@@ -137,6 +137,8 @@ void testOrm02()
     orm::Database db(&mysql);
     db.registerModel<TestCLL>();
     db.createScheme();
+    db.createScheme();
+    db.createScheme();
     TestCLL t1, t2, t3, r1, r2 ,r3;
     t1.someIndex = 1;
     t2.someIndex = 2;
@@ -145,7 +147,7 @@ void testOrm02()
     int id3 = db.newInst(t3);
     int id1 = db.newInst(t1);
 
-    //exit(1);
+    db.createScheme();
 
     r1 = db.getInstById<TestCLL>(id1).getValue();
     r3 = db.getInstById<TestCLL>(id3).getValue();
@@ -157,6 +159,8 @@ void testOrm02()
 
     db.deleteInst<TestCLL>(id2);
     ASSERT(db.getInstById<TestCLL>(id2).isLeft);
+    ASSERT(!db.getInstById<TestCLL>(id3).isLeft);
+    ASSERT(!db.getInstById<TestCLL>(id1).isLeft);
 }
 
 
