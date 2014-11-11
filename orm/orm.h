@@ -18,7 +18,7 @@
     }
 
 #define ORM_MODEL_FIELD(Field) \
-    (orm::OrmField<TYPEOF(Field)>(Field, #Field).getSQLNameTypeAndVal())
+    (orm::OrmField<TYPEOF(Field)>(Field, &Field, #Field).getSQLNameTypeAndVal())
 
 namespace orm {
 

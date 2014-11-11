@@ -7,6 +7,7 @@
 #include <sstream>
 
 #include "ormfield.h"
+#include "ormfieldhandler.h"
 
 #include "../sqlworker.h"
 #include "../functional/tripple.h"

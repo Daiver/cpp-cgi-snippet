@@ -31,16 +31,18 @@ template<typename FieldType>
 class OrmField
 {
 public:
-    OrmField(FieldType fieldValue, std::string fieldName)
+    OrmField(FieldType fieldValue, FieldType *fieldPointer, std::string fieldName)
     {
         this->fieldName = fieldName;
         this->fieldValue = fieldValue;
+        this->fieldPointer = fieldPointer;
     }
 
     functional::Tripple<std::string, std::string, std::string> getSQLNameTypeAndVal();
 
     std::string fieldName;
     FieldType fieldValue;
+    FieldType *fieldPointer;
 };
 }
 
