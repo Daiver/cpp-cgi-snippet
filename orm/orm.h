@@ -14,7 +14,7 @@
 #define ORM_EXPORT_CLASS(ClassName) \
     namespace orm { \
         template <> \
-        std::string Database::getClassName<ClassName>() \
+        std::string getClassName<ClassName>() \
         {return #ClassName ; } \
     }
 

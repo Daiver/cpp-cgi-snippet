@@ -10,6 +10,7 @@
 #include "ormfield.h"
 #include "ormfieldhandler.h"
 #include "modelscheme.h"
+#include "modelptr.h"
 
 
 #include "../sqlworker.h"
@@ -23,8 +24,8 @@ public:
 
     Database(SQLWorker *worker=NULL);
 
-    template <typename ClassName>
-    std::string getClassName();
+    //template <typename ClassName>
+    //std::string getClassName();
 
     template<typename ModelClass>
     ModelScheme getSchemeFromModelClass();
@@ -85,11 +86,7 @@ int orm::Database::newInst(ModelClass &obj)
     this->initScheme(obj, &scheme);
 
     sqlWorker->query(scheme.getInsertQuery());
-    return atoi(sqlWorker->query("SELECT LAST_INSERT_ID()"
-                    /*"SELECT " + std::string(ORM_ID_PREFIX) + 
-                    scheme.modelName + " FROM " +
-                    std::string(ORM_TABLE_PREFIX) + scheme.modelName*/
-                    ).getValue()[0][0].c_str());
+    return atoi(sqlWorker->query("SELECT LAST_INSERT_ID()").getValue()[0][0].c_str());
 }
 
 template<typename ModelClass>

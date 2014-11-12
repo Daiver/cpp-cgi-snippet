@@ -24,7 +24,7 @@ ORM_EXPORT_CLASS(TestCl);
 void testExport01()
 {
     orm::Database db;
-    ASSERT(db.getClassName<TestCl>() == "TestCl");
+    ASSERT(orm::getClassName<TestCl>() == "TestCl");
 }
 
 void testField01()

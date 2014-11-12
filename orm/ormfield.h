@@ -7,6 +7,10 @@
 
 namespace orm{
 
+
+template <typename ModelName>
+std::string getClassName();
+
 template <typename TypeName>
 std::string getSQLTypeName();
 
