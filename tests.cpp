@@ -177,12 +177,16 @@ void testOrmPtr01()
     orm::Database db(&mysql);
     db.registerModel<TestCLL>();
     db.createScheme();
-    db.createScheme();
     
     orm::ModelPtr<TestCLL> ptr1 = db.createRecord(TestCLL(1, "lol"));
+    db.createScheme();
     orm::ModelPtr<TestCLL> ptr2 = db.getPtrById<TestCLL>(ptr1.id).getValue();
     ASSERT_EQ(ptr2->someIndex, 1);
     ASSERT_EQ(ptr2->name, "lol");
+    ptr1.destroy();
+    ptr2.destroy();
+
+    ASSERT(db.getPtrById<TestCLL>(ptr1.id).isLeft);
 }
 
 void dataBaseTests()
