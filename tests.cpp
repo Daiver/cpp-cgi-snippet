@@ -83,6 +83,12 @@ void testDB02()
 class TestCLL
 {
 public:
+    TestCLL(){}
+    TestCLL(int someIndex, std::string name): someIndex(someIndex), name(name)
+    {
+
+    }
+
     void initOrm(orm::OrmFieldHandler handler)
     {
         handler << ORM_MODEL_FIELD(someIndex);
@@ -163,6 +169,18 @@ void testOrm02()
     ASSERT(!db.getInstById<TestCLL>(id1).isLeft);
 }
 
+void testOrmPtr01()
+{ 
+    MySQLWorker mysql;
+    mysql.connect("192.168.10.101", "root", "123", "testDB");
+    ASSERT(mysql.isConnected());
+    orm::Database db(&mysql);
+    db.registerModel<TestCLL>();
+    db.createScheme();
+    db.createScheme();
+    
+    orm::ModelPtr<TestCLL> ptr1 = db.createRecord(TestCLL(1, "lol"));
+}
 
 void dataBaseTests()
 {
@@ -178,6 +196,7 @@ void dataBaseTests()
         RUN_TEST(testDB02);
         RUN_TEST(testOrmCreation01);
         RUN_TEST(testOrm02);
+        RUN_TEST(testOrmPtr01);
         MySQLWorker mysql;
         mysql.connect("192.168.10.101", "root", "123", "pract");
         mysql.query("DROP DATABASE testDB");

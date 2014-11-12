@@ -9,10 +9,17 @@
 namespace orm {
 
 template<typename ModelClass>
+void initScheme(ModelClass &obj, ModelScheme *sch)
+{
+    obj.initOrm(OrmFieldHandler(&sch->fields));
+}
+
+
+template<typename ModelClass>
 class ModelPtr
 {
 public:
-    ModelPtr(SQLWorker *sqlWorker, ModelClass &obj);
+    ModelPtr(SQLWorker *sqlWorker, const ModelClass &obj);
     ~ModelPtr();
 
     int newInst(ModelClass &obj);
@@ -30,7 +37,7 @@ public:
 }
 
 template<typename ModelClass>
-orm::ModelPtr<ModelClass>::ModelPtr(SQLWorker *sqlWorker, ModelClass &obj)
+orm::ModelPtr<ModelClass>::ModelPtr(SQLWorker *sqlWorker, const ModelClass &obj)
 {
     this->sqlWorker = sqlWorker;
     this->obj = obj;
@@ -58,7 +65,7 @@ int orm::ModelPtr<ModelClass>::newInst(ModelClass &obj)
 {
     ModelScheme scheme;
     scheme.modelName = getClassName<ModelClass>();
-    this->initScheme(obj, &scheme);
+    initScheme(obj, &scheme);
 
     sqlWorker->query(scheme.getInsertQuery());
     return atoi(sqlWorker->query("SELECT LAST_INSERT_ID()").getValue()[0][0].c_str());
@@ -69,7 +76,7 @@ void orm::ModelPtr<ModelClass>::updInst()
 {
     ModelScheme scheme;
     scheme.modelName = getClassName<ModelClass>();
-    this->initScheme(obj, &scheme);
+    initScheme(obj, &scheme);
 
     sqlWorker->query(scheme.getUpdateQuery(id));
 }
@@ -80,12 +87,11 @@ void orm::ModelPtr<ModelClass>::destroy()
     ModelClass res;
     ModelScheme scheme;
     scheme.modelName = getClassName<ModelClass>();
-    this->initScheme(res, &scheme);
+    initScheme(res, &scheme);
 
     std::string q = scheme.getDeleteQuery(id);
     SQLWorker::SQLQueryResult ans = sqlWorker->query(q);
     isCreated = false;
 }
-
 
 #endif

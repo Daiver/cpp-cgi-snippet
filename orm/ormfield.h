@@ -7,7 +7,6 @@
 
 namespace orm{
 
-
 template <typename ModelName>
 std::string getClassName();
 

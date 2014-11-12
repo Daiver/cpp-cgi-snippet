@@ -30,8 +30,8 @@ public:
     template<typename ModelClass>
     ModelScheme getSchemeFromModelClass();
 
-    template <typename ModelClass>
-    void initScheme(ModelClass &obj, ModelScheme *sch);
+    //template <typename ModelClass>
+    //void initScheme(ModelClass &obj, ModelScheme *sch);
 
     template <typename ModelClass>
     void registerModel();
@@ -51,7 +51,7 @@ public:
     functional::Either<std::string, ModelClass> getInstById(int id);
 
     template<typename ModelClass>
-    ModelPtr<ModelClass> createRecord(ModelClass &example);
+    ModelPtr<ModelClass> createRecord(const ModelClass &example);
 
     SQLWorker *sqlWorker;
     std::vector<ModelScheme> models;
@@ -59,7 +59,7 @@ public:
 }
 
 template<typename ModelClass>
-orm::ModelPtr<ModelClass> orm::Database::createRecord(ModelClass &example)
+orm::ModelPtr<ModelClass> orm::Database::createRecord(const ModelClass &example)
 {
     ModelPtr<ModelClass> ptr(this->sqlWorker, example);
     ptr.id = ptr.newInst(ptr.obj);
@@ -67,11 +67,11 @@ orm::ModelPtr<ModelClass> orm::Database::createRecord(ModelClass &example)
     return ptr;
 }
 
-template<typename ModelClass>
+/*template<typename ModelClass>
 void orm::Database::initScheme(ModelClass &obj, ModelScheme *sch)
 {
     obj.initOrm(OrmFieldHandler(&sch->fields));
-}
+}*/
 
 template<typename ModelClass>
 orm::ModelScheme orm::Database::getSchemeFromModelClass()
@@ -79,7 +79,7 @@ orm::ModelScheme orm::Database::getSchemeFromModelClass()
     ModelScheme res;
     res.modelName = getClassName<ModelClass>();
     ModelClass tmpInst;
-    this->initScheme(tmpInst, &res);
+    initScheme(tmpInst, &res);
     return res;
 }
 
@@ -95,7 +95,7 @@ int orm::Database::newInst(ModelClass &obj)
 
     ModelScheme scheme;
     scheme.modelName = getClassName<ModelClass>();
-    this->initScheme(obj, &scheme);
+    initScheme(obj, &scheme);
 
     sqlWorker->query(scheme.getInsertQuery());
     return atoi(sqlWorker->query("SELECT LAST_INSERT_ID()").getValue()[0][0].c_str());
@@ -106,7 +106,7 @@ void orm::Database::updInst(int id, ModelClass &obj)
 {
     ModelScheme scheme;
     scheme.modelName = getClassName<ModelClass>();
-    this->initScheme(obj, &scheme);
+    initScheme(obj, &scheme);
 
     sqlWorker->query(scheme.getUpdateQuery(id));
 }
@@ -117,7 +117,7 @@ functional::Either<std::string, ModelClass> orm::Database::getInstById(int id)
     ModelClass res;
     ModelScheme scheme;
     scheme.modelName = getClassName<ModelClass>();
-    this->initScheme(res, &scheme);
+    initScheme(res, &scheme);
 
     std::string q = scheme.getSelectByIdQuery(id);
     //std::cout << q << std::endl;
@@ -142,7 +142,7 @@ void orm::Database::deleteInst(int id)
     ModelClass res;
     ModelScheme scheme;
     scheme.modelName = getClassName<ModelClass>();
-    this->initScheme(res, &scheme);
+    initScheme(res, &scheme);
 
     std::string q = scheme.getDeleteQuery(id);
     SQLWorker::SQLQueryResult ans = sqlWorker->query(q);

@@ -11,6 +11,7 @@ namespace orm{
 #define ORM_ID_PREFIX "orm_id_"
 #define ORM_TABLE_PREFIX "orm_model_"
 
+
 //represents sql version of model
 class ModelScheme{
 public:
@@ -29,6 +30,7 @@ public:
     std::string getSelectByIdQuery(int id) const;
 
     std::string getDeleteQuery(int id) const;
+
 };
 
 }
