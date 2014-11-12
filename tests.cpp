@@ -180,6 +180,9 @@ void testOrmPtr01()
     db.createScheme();
     
     orm::ModelPtr<TestCLL> ptr1 = db.createRecord(TestCLL(1, "lol"));
+    orm::ModelPtr<TestCLL> ptr2 = db.getPtrById<TestCLL>(ptr1.id).getValue();
+    ASSERT_EQ(ptr2->someIndex, 1);
+    ASSERT_EQ(ptr2->name, "lol");
 }
 
 void dataBaseTests()

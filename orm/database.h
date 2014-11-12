@@ -51,6 +51,9 @@ public:
     functional::Either<std::string, ModelClass> getInstById(int id);
 
     template<typename ModelClass>
+    functional::Either<std::string, orm::ModelPtr<ModelClass> > getPtrById(int id);
+
+    template<typename ModelClass>
     ModelPtr<ModelClass> createRecord(const ModelClass &example);
 
     SQLWorker *sqlWorker;
@@ -135,6 +138,17 @@ functional::Either<std::string, ModelClass> orm::Database::getInstById(int id)
     return functional::Either<std::string, ModelClass>::Right(res);
 }
 
+template<typename ModelClass>
+functional::Either<std::string, orm::ModelPtr<ModelClass> > 
+        orm::Database::getPtrById(int id)
+{
+    functional::Either<std::string, ModelClass> ans = getInstById<ModelClass>(id);
+    if(ans.isLeft)
+        return functional::Either<std::string, ModelPtr<ModelClass> >::Left(ans.getLeft());
+    
+    ModelPtr<ModelClass> res(this->sqlWorker, ans.getValue());
+        return functional::Either<std::string, ModelPtr<ModelClass> >::Right(res);
+}
 
 template<typename ModelClass>
 void orm::Database::deleteInst(int id)

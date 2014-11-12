@@ -19,13 +19,14 @@ template<typename ModelClass>
 class ModelPtr
 {
 public:
+    ModelPtr();
     ModelPtr(SQLWorker *sqlWorker, const ModelClass &obj);
     ~ModelPtr();
 
     int newInst(ModelClass &obj);
     void updInst();
     void destroy();
-    ModelClass *operator -> () const;
+    const ModelClass *operator -> () const;
 
     int id;
     bool isModified;
@@ -34,6 +35,15 @@ public:
     SQLWorker *sqlWorker;
 };
 
+}
+
+template<typename ModelClass>
+orm::ModelPtr<ModelClass>::ModelPtr()
+{
+    this->sqlWorker = NULL;
+    id = -1;
+    isModified = false;
+    isCreated  = false;
 }
 
 template<typename ModelClass>
@@ -55,7 +65,7 @@ orm::ModelPtr<ModelClass>::~ModelPtr()
 }
 
 template<typename ModelClass>
-ModelClass *orm::ModelPtr<ModelClass>::operator -> () const
+const ModelClass *orm::ModelPtr<ModelClass>::operator -> () const
 {
     return &obj;
 }
