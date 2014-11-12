@@ -50,9 +50,21 @@ public:
     template<typename ModelClass>
     functional::Either<std::string, ModelClass> getInstById(int id);
 
+    template<typename ModelClass>
+    ModelPtr<ModelClass> createRecord(ModelClass &example);
+
     SQLWorker *sqlWorker;
     std::vector<ModelScheme> models;
 };
+}
+
+template<typename ModelClass>
+orm::ModelPtr<ModelClass> orm::Database::createRecord(ModelClass &example)
+{
+    ModelPtr<ModelClass> ptr(this->sqlWorker, example);
+    ptr.id = ptr.newInst(ptr.obj);
+    ptr.isCreated = true;
+    return ptr;
 }
 
 template<typename ModelClass>

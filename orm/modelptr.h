@@ -12,27 +12,45 @@ template<typename ModelClass>
 class ModelPtr
 {
 public:
-    ModelPtr(SQLWorker *sqlWorker, ModelClass *obj);
+    ModelPtr(SQLWorker *sqlWorker, ModelClass &obj);
+    ~ModelPtr();
 
     int newInst(ModelClass &obj);
+    void updInst();
+    void destroy();
+    ModelClass *operator -> () const;
 
-    void updInst(int id, ModelClass &obj);
-
-    void deleteInst(int id);
-
-    functional::Either<std::string, ModelClass> getInstById(int id);
-
-    ModelClass *obj;
+    int id;
+    bool isModified;
+    bool isCreated;
+    ModelClass obj;
     SQLWorker *sqlWorker;
 };
 
 }
 
 template<typename ModelClass>
-orm::ModelPtr<ModelClass>::ModelPtr(SQLWorker *sqlWorker, ModelClass *obj)
+orm::ModelPtr<ModelClass>::ModelPtr(SQLWorker *sqlWorker, ModelClass &obj)
 {
     this->sqlWorker = sqlWorker;
     this->obj = obj;
+    id = -1;
+    isModified = false;
+    isCreated  = false;
+}
+
+
+template<typename ModelClass>
+orm::ModelPtr<ModelClass>::~ModelPtr()
+{
+    if(isCreated)
+        updInst();
+}
+
+template<typename ModelClass>
+ModelClass *orm::ModelPtr<ModelClass>::operator -> () const
+{
+    return &obj;
 }
 
 template<typename ModelClass>
@@ -47,7 +65,7 @@ int orm::ModelPtr<ModelClass>::newInst(ModelClass &obj)
 }
 
 template<typename ModelClass>
-void orm::ModelPtr<ModelClass>::updInst(int id, ModelClass &obj)
+void orm::ModelPtr<ModelClass>::updInst()
 {
     ModelScheme scheme;
     scheme.modelName = getClassName<ModelClass>();
@@ -57,32 +75,7 @@ void orm::ModelPtr<ModelClass>::updInst(int id, ModelClass &obj)
 }
 
 template<typename ModelClass>
-functional::Either<std::string, ModelClass> orm::ModelPtr<ModelClass>::getInstById(int id)
-{
-    ModelClass res;
-    ModelScheme scheme;
-    scheme.modelName = getClassName<ModelClass>();
-    this->initScheme(res, &scheme);
-
-    std::string q = scheme.getSelectByIdQuery(id);
-    //std::cout << q << std::endl;
-    SQLWorker::SQLQueryResult ans = sqlWorker->query(q);
-    if(ans.isLeft)
-        return functional::Either<std::string, ModelClass>::Left(ans.getLeft());
-
-    if(ans.getValue().size() != 1)
-        return functional::Either<std::string, ModelClass>::Left("Bad count of rows!");
-
-    std::vector<std::string> values = ans.getValue()[0];
-    OrmFieldHandler handler(NULL, &values, true);
-    res.initOrm(handler);
-
-    return functional::Either<std::string, ModelClass>::Right(res);
-}
-
-
-template<typename ModelClass>
-void orm::ModelPtr<ModelClass>::deleteInst(int id)
+void orm::ModelPtr<ModelClass>::destroy()
 {
     ModelClass res;
     ModelScheme scheme;
@@ -91,7 +84,7 @@ void orm::ModelPtr<ModelClass>::deleteInst(int id)
 
     std::string q = scheme.getDeleteQuery(id);
     SQLWorker::SQLQueryResult ans = sqlWorker->query(q);
-   
+    isCreated = false;
 }
 
 
