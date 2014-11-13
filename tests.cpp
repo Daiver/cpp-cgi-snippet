@@ -182,6 +182,7 @@ void testOrmPtr01()
     db.createScheme();
     orm::ModelPtr<TestCLL> ptr2 = db.getPtrById<TestCLL>(ptr1.id).getValue();
     ASSERT_EQ(ptr2->someIndex, 1);
+    ptr1->someIndex = 10;
     ASSERT_EQ(ptr2->name, "lol");
     ptr1.destroy();
     ptr2.destroy();
@@ -189,6 +190,37 @@ void testOrmPtr01()
     ASSERT(db.getPtrById<TestCLL>(ptr1.id).isLeft);
 }
 
+void testOrmPtr02()
+{ 
+    MySQLWorker mysql;
+    mysql.connect("192.168.10.101", "root", "123", "testDB");
+    ASSERT(mysql.isConnected());
+    orm::Database db(&mysql);
+    db.registerModel<TestCLL>();
+    db.createScheme();
+    
+    int id = -1;
+
+    {
+        orm::ModelPtr<TestCLL> ptr1 = db.createRecord(TestCLL(7, "ll"));
+        id = ptr1.id;
+    }
+    
+    ASSERT(id != 1);
+
+    {
+        orm::ModelPtr<TestCLL> ptr1 = db.getPtrById<TestCLL>(id).getValue();
+        ASSERT_EQ(ptr1->name, "ll");
+        ptr1->name = "nope";        
+    }
+    
+    {
+        orm::ModelPtr<TestCLL> ptr1 = db.getPtrById<TestCLL>(id).getValue();
+        ASSERT_EQ(ptr1->name, "nope");
+    }
+
+}
+ 
 void dataBaseTests()
 {
     bool isPossibleToRunDBTests = false;
@@ -204,6 +236,7 @@ void dataBaseTests()
         RUN_TEST(testOrmCreation01);
         RUN_TEST(testOrm02);
         RUN_TEST(testOrmPtr01);
+        RUN_TEST(testOrmPtr02);
         MySQLWorker mysql;
         mysql.connect("192.168.10.101", "root", "123", "pract");
         mysql.query("DROP DATABASE testDB");

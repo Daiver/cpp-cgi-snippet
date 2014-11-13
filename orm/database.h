@@ -147,7 +147,9 @@ functional::Either<std::string, orm::ModelPtr<ModelClass> >
         return functional::Either<std::string, ModelPtr<ModelClass> >::Left(ans.getLeft());
     
     ModelPtr<ModelClass> res(this->sqlWorker, ans.getValue());
-        return functional::Either<std::string, ModelPtr<ModelClass> >::Right(res);
+    res.isCreated = true;
+    res.id = id;
+    return functional::Either<std::string, ModelPtr<ModelClass> >::Right(res);
 }
 
 template<typename ModelClass>

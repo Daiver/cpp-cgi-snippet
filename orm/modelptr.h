@@ -27,6 +27,7 @@ public:
     void updInst();
     void destroy();
     const ModelClass *operator -> () const;
+    ModelClass *operator -> ();
 
     int id;
     bool isModified;
@@ -60,8 +61,16 @@ orm::ModelPtr<ModelClass>::ModelPtr(SQLWorker *sqlWorker, const ModelClass &obj)
 template<typename ModelClass>
 orm::ModelPtr<ModelClass>::~ModelPtr()
 {
-    if(isCreated)
+    if(isCreated && isModified){
         updInst();
+    }
+}
+
+template<typename ModelClass>
+ModelClass *orm::ModelPtr<ModelClass>::operator -> () 
+{
+    isModified = true;
+    return &obj;
 }
 
 template<typename ModelClass>
@@ -88,7 +97,10 @@ void orm::ModelPtr<ModelClass>::updInst()
     scheme.modelName = getClassName<ModelClass>();
     initScheme(obj, &scheme);
 
-    sqlWorker->query(scheme.getUpdateQuery(id));
+    std::string q = scheme.getUpdateQuery(id);
+
+    if(sqlWorker->query(q).isLeft)
+        std::cout << "UPD ERR " << q << std::endl;
 }
 
 template<typename ModelClass>
