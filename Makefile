@@ -1,7 +1,7 @@
 .PHONY: all clean .FORCE
 
-CPP = clang++
-#CPP = g++
+#CPP = clang++
+CPP = g++
 
 bin/main: .FORCE bin/requesthandler.o bin/common.o bin/getpost.o bin/templateengine.o bin/responsehandler.o bin/mysqlworker.o bin/orm.o bin/database.o bin/ormfield.o bin/modelscheme.o
 	$(CPP) -o bin/main main.cpp bin/*.o \
