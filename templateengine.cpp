@@ -15,14 +15,14 @@ TemplateRenderEither TemplateEngine::renderTemplate(const std::string &temp,
     for(int i = 0; i < temp.size() - 1; ++i){
         int a = temp[i];
         int b = temp[i + 1];
-        if(a == '{' && b == a && curState == PARSE_TEXT){
+        if(a == '[' && b == a && curState == PARSE_TEXT){
             res += accum;
             accum = "";
             curState = PARSE_IDENT;
             ++i;
-        }else if(a == '{' && b == a && curState == PARSE_IDENT){
+        }else if(a == '[' && b == a && curState == PARSE_IDENT){
             return TemplateRenderEither::Left("Bad brackets inside ident name");
-        }else if(a == '}' && b == a && curState == PARSE_IDENT){
+        }else if(a == ']' && b == a && curState == PARSE_IDENT){
             if(!args.count(accum))
                 return TemplateRenderEither::Left("Bad var name: " + accum);
             res += args.at(accum);
@@ -35,7 +35,7 @@ TemplateRenderEither TemplateEngine::renderTemplate(const std::string &temp,
     }
     if(curState == PARSE_IDENT)
         return TemplateRenderEither::Left("Bad ident name at the end of the file");
-    if(temp[temp.size() - 1] != '}')
+    if(temp[temp.size() - 1] != ']')
         accum += temp[temp.size() - 1];
     res += accum;
 
