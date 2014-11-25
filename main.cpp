@@ -38,6 +38,7 @@ int main(int argc, char **argv)
         }
     }if (args.count("staticfile")){
         std::string res = readFile(std::string("../static/") + args["staticfile"]);
+        response << res;
     }else{
         response << 
             cgi::TemplateEngine::renderTemplate(readFile(pathToExe + "../templates/teststatic.html"), cont).getValue();
