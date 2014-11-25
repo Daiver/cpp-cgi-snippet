@@ -1,16 +1,21 @@
-.PHONY: all clean .FORCE
+.PHONY: all framework clean .FORCE
 
 #CPP = clang++
 CPP = g++
 
-bin/main: .FORCE bin/requesthandler.o bin/common.o bin/getpost.o bin/templateengine.o bin/responsehandler.o bin/mysqlworker.o bin/orm.o bin/database.o bin/ormfield.o bin/modelscheme.o
+bin/main: framework bin/tests
 	$(CPP) -o bin/main main.cpp bin/*.o \
 		mysql-connector-c-6.1.5-linux-glibc2.5-x86_64/lib/libmysqlclient.so.18.3.0 \
 		-Imysql-connector-c-6.1.5-linux-glibc2.5-x86_64/include
+
+bin/tests: framework
 	$(CPP) -o bin/tests tests.cpp bin/*.o \
 		mysql-connector-c-6.1.5-linux-glibc2.5-x86_64/lib/libmysqlclient.so.18.3.0 \
 		-Imysql-connector-c-6.1.5-linux-glibc2.5-x86_64/include \
 			 && ./bin/tests
+
+framework: .FORCE bin/requesthandler.o bin/common.o bin/getpost.o bin/templateengine.o bin/responsehandler.o bin/mysqlworker.o bin/orm.o bin/database.o bin/ormfield.o bin/modelscheme.o
+	echo "By Dark_Daiver"
 
 bin/requesthandler.o: bin/getpost.o
 	$(CPP) -c -o bin/requesthandler.o requesthandler.cpp 
@@ -44,8 +49,8 @@ bin/modelscheme.o:
 
 clean:
 	-rm bin/main  bin/*.o 
+	-mkdir build/
 	-mkdir bin/
 
-.FORCE:
+.FORCE: 
 	make clean
-
