@@ -5,13 +5,13 @@ CPP = g++
 
 bin/main: framework bin/tests
 	$(CPP) -o bin/main main.cpp build/*.o \
-		mysql-connector-c-6.1.5-linux-glibc2.5-x86_64/lib/libmysqlclient.so.18.3.0 \
-		-Imysql-connector-c-6.1.5-linux-glibc2.5-x86_64/include
+		-Imysql-connector-c-6.1.5-linux-glibc2.5-x86_64/include \
+		mysql-connector-c-6.1.5-linux-glibc2.5-x86_64/lib/libmysqlclient.so.18.3.0 
 
 bin/tests: framework
 	$(CPP) -o bin/tests tests.cpp build/*.o \
-		mysql-connector-c-6.1.5-linux-glibc2.5-x86_64/lib/libmysqlclient.so.18.3.0 \
 		-Imysql-connector-c-6.1.5-linux-glibc2.5-x86_64/include \
+		mysql-connector-c-6.1.5-linux-glibc2.5-x86_64/lib/libmysqlclient.so.18.3.0 \
 			 && ./bin/tests
 
 framework: .FORCE build/requesthandler.o build/common.o build/getpost.o build/templateengine.o build/responsehandler.o build/mysqlworker.o build/orm.o build/database.o build/ormfield.o build/modelscheme.o
