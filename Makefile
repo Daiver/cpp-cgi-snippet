@@ -1,18 +1,15 @@
 .PHONY: all framework clean .FORCE
 
+INCLUDE_PATH = mysql-connector-c-6.1.5-linux-glibc2.5-x86_64/include
+SHARED_LINK_PATH = mysql-connector-c-6.1.5-linux-glibc2.5-x86_64/lib/libmysqlclient.so.18.3.0 
+
 #CPP = clang++
 CPP = g++
 
 bin/main: framework bin/tests
-	$(CPP) -o bin/main main.cpp build/*.o \
-		-Imysql-connector-c-6.1.5-linux-glibc2.5-x86_64/include \
-		mysql-connector-c-6.1.5-linux-glibc2.5-x86_64/lib/libmysqlclient.so.18.3.0 
-
+	$(CPP) -o bin/main main.cpp build/*.o -I$(INCLUDE_PATH) $(SHARED_LINK_PATH)
 bin/tests: framework
-	$(CPP) -o bin/tests tests.cpp build/*.o \
-		-Imysql-connector-c-6.1.5-linux-glibc2.5-x86_64/include \
-		mysql-connector-c-6.1.5-linux-glibc2.5-x86_64/lib/libmysqlclient.so.18.3.0 \
-			 && ./bin/tests
+	$(CPP) -o bin/tests tests.cpp build/*.o -I$(INCLUDE_PATH) $(SHARED_LINK_PATH) && ./bin/tests
 
 framework: .FORCE build/requesthandler.o build/common.o build/getpost.o build/templateengine.o build/responsehandler.o build/mysqlworker.o build/orm.o build/database.o build/ormfield.o build/modelscheme.o
 	echo "By Dark_Daiver"
