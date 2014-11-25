@@ -41,8 +41,8 @@ int main(int argc, char **argv)
         response << res;
     }else{
         response << 
-            cgi::TemplateEngine::renderTemplate(readFile(pathToExe + "../templates/teststatic.html"), cont).getValue();
-            //cgi::TemplateEngine::renderTemplate(readFile(pathToExe + "../templates/aindex.html"), cont).getValue();
+            //cgi::TemplateEngine::renderTemplate(readFile(pathToExe + "../templates/teststatic.html"), cont).getValue();
+            cgi::TemplateEngine::renderTemplate(readFile(pathToExe + "../templates/aindex.html"), cont).getValue();
             //cgi::TemplateEngine::renderTemplate(readFile(pathToExe + "../templates/index.html"), cont).getValue();
 
     }
