@@ -24,7 +24,7 @@ int main(int argc, char **argv)
     cgi::ResponseHandler response;
     cgi::RequestArgs args = request.getArgs();
     cgi::RequestArgs cont;
-    cont["someVar"] = "YEP!";
+    cont["STATIC_PATH"] = pathToExe + "?staticfile=";
     if(args.count("resource")){//process rest
         if(args["resource"] == "notes" && args.count("id")){
             if(request.requestType() == cgi::REQUEST_GET){
