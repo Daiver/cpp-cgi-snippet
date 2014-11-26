@@ -24,7 +24,7 @@ int main(int argc, char **argv)
     cgi::ResponseHandler response;
     cgi::RequestArgs args = request.getArgs();
     cgi::RequestArgs cont;
-    cont["STATIC_PATH"] = std::string(argv[0]) + "?staticfile=";
+    cont["STATIC_PATH"] = "main?staticfile=";
     if(args.count("resource")){//process rest
         if(args["resource"] == "notes" && args.count("id")){
             if(request.requestType() == cgi::REQUEST_GET){
