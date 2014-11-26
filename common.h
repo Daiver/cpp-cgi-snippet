@@ -4,6 +4,7 @@
 #include <string>
 #include <fstream>
 #include <vector>
+#include <sstream>
 
 std::string readFile(const std::string &fileName);
 void writeFile(const std::string &fileName, const std::string &s);
@@ -33,6 +34,11 @@ bool isVectorsAreTheSame(const std::vector<T> &a, const std::vector<T> &b)
 {
     return isVectorsAreTheSame(a, b, &compareOperator<T>);
 }
+
+std::vector<std::string> &split(const std::string &s, char delim, std::vector<std::string> &elems) ;
+
+std::vector<std::string> split(const std::string &s, char delim);
+
 
 #ifdef __GNUG__
 #define TYPEOF(x) __typeof__((x))

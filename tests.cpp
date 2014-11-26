@@ -261,6 +261,16 @@ void testCompareVectors01()
     ASSERT(!isVectorsAreTheSame(v1, v2));
 }
 
+void testSplit01()
+{
+    std::string s = "1/23/45";
+    std::vector<std::string> res = split(s, '/');
+    ASSERT_EQ(res.size(), 3);
+    ASSERT_EQ(res[0], std::string("1"));
+    ASSERT_EQ(res[1], std::string("23"));
+    ASSERT_EQ(res[2], std::string("45"));
+}
+
 int main()
 {
     RUN_TEST(testTemplateEngine01);
@@ -268,6 +278,7 @@ int main()
     RUN_TEST(testTemplateEngine03);
     RUN_TEST(testTemplateEngine04);
     RUN_TEST(testCompareVectors01);
+    RUN_TEST(testSplit01);
     dataBaseTests();
     return 0;
 }
