@@ -44,3 +44,9 @@ std::vector<std::string> split(const std::string &s, char delim) {
     split(s, delim, elems);
     return elems;
 }
+
+std::string getExtensionOfFileByPath(std::string s)
+{
+    std::vector<std::string> splited = split(s, '.');
+    return splited[splited.size() - 1];
+}

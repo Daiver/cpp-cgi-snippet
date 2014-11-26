@@ -17,6 +17,7 @@ public:
     void operator << (const char *s);
 
     int code;
+    std::string mimeType;
     std::string body;
 };
 

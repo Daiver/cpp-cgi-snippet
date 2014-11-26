@@ -37,7 +37,10 @@ int main(int argc, char **argv)
             }
         }
     }if (args.count("staticfile")){
-        std::string res = readFile(std::string("../static/") + args["staticfile"]);
+        std::string reqFile = args["staticfile"];
+        std::string res = readFile(std::string("../static/") + reqFile);
+        if(getExtensionOfFileByPath(reqFile) == "js")
+            response.mimeType = "text/javascript";
         response << res;
     }else{
         response << 

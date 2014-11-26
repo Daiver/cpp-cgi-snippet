@@ -271,6 +271,12 @@ void testSplit01()
     ASSERT_EQ(res[2], std::string("45"));
 }
 
+void testGetExt()
+{
+    std::string s = "/e/main.cpp";
+    ASSERT_EQ(getExtensionOfFileByPath(s), std::string("cpp"));
+}
+
 int main()
 {
     RUN_TEST(testTemplateEngine01);
@@ -279,6 +285,7 @@ int main()
     RUN_TEST(testTemplateEngine04);
     RUN_TEST(testCompareVectors01);
     RUN_TEST(testSplit01);
+    RUN_TEST(testGetExt);
     dataBaseTests();
     return 0;
 }
