@@ -11,4 +11,4 @@ clean:
 
 .FORCE:
 		make clean
-
+		-mkdir bin

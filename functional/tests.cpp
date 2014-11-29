@@ -1,6 +1,7 @@
 #include "either.hpp"
 #include <iostream>
 #include <string>
+#include "tripple.hpp"
 
 #include "../minitest.h"
 
@@ -47,6 +48,14 @@ void test05()
     ASSERT((!e.isLeft) && e.getValue() == 5);
 }
 
+void test06()
+{
+    functional::Tripple<int, double, std::string> tt = functional::makeTripple(1, 1.5, std::string("not me"));
+    LET3(int, i, double, d, std::string, s) = tt;
+    ASSERT_EQ(i, 1);
+    ASSERT_EQ(d, 1.5);
+    ASSERT_EQ(s, std::string("not me"));
+}
 
 int main()
 {
@@ -55,5 +64,6 @@ int main()
     RUN_TEST(test03);
     RUN_TEST(test04);
     RUN_TEST(test05);
+    RUN_TEST(test06);
     return 0;
 }
