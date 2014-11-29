@@ -6,8 +6,12 @@ SHARED_LINK_PATH = mysql-connector-c-6.1.5-linux-glibc2.5-x86_64/lib/libmysqlcli
 #CPP = clang++
 CPP = g++
 
+bin/blog: framework bin/tests
+	$(CPP) -o bin/blog blog.cpp build/*.o -I$(INCLUDE_PATH) $(SHARED_LINK_PATH)
+
 bin/main: framework bin/tests
 	$(CPP) -o bin/main main.cpp build/*.o -I$(INCLUDE_PATH) $(SHARED_LINK_PATH)
+
 bin/tests: framework
 	$(CPP) -o bin/tests tests.cpp build/*.o -I$(INCLUDE_PATH) $(SHARED_LINK_PATH) && ./bin/tests
 
