@@ -5,7 +5,7 @@
 #include <map>
 
 #include "functional/either.h"
-#include "commoncgi.h"
+#include "commoncgi.hpp"
 
 namespace cgi {
 

@@ -2,8 +2,8 @@
 #include <vector>
 #include <map>
 
-#include "commoncgi.h"
-#include "getpost.h"
+#include "commoncgi.hpp"
+#include "getpost.hpp"
 
 namespace cgi {
 

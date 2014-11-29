@@ -1,4 +1,4 @@
-#include "getpost.h"
+#include "getpost.hpp"
 
 std::string urlDecode(std::string str)
 {

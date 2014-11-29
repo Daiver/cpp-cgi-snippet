@@ -4,10 +4,10 @@
 #include <map>
 
 #include "minitest.h"
-#include "common.h"
-#include "commoncgi.h"
-#include "templateengine.h"
-#include "mysqlworker.h"
+#include "common.hpp"
+#include "commoncgi.hpp"
+#include "templateengine.hpp"
+#include "mysqlworker.hpp"
 #include "orm/orm.h"
 
 using namespace cgi;

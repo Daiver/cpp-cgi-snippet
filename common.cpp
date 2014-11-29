@@ -1,4 +1,4 @@
-#include "common.h"
+#include "common.hpp"
 
 std::string replaceString(std::string subject, const std::string& search,
                           const std::string& replace) {

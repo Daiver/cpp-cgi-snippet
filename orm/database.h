@@ -13,7 +13,7 @@
 #include "modelptr.h"
 
 
-#include "../sqlworker.h"
+#include "../sqlworker.hpp"
 #include "../functional/tripple.h"
 
 namespace orm {

@@ -3,8 +3,8 @@
 
 #include <string>
 
-#include "../common.h"
-#include "../sqlworker.h"
+#include "../common.hpp"
+#include "../sqlworker.hpp"
 
 #include "ormfield.h"
 #include "ormfieldhandler.h"

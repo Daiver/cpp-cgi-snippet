@@ -1,4 +1,4 @@
-#include "mysqlworker.h"
+#include "mysqlworker.hpp"
 
 MySQLWorker::MySQLWorker()
 {

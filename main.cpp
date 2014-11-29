@@ -1,13 +1,13 @@
 #include <stdio.h>
 #include <iostream>
 
-#include "requesthandler.h"
-#include "responsehandler.h"
-#include "common.h"
+#include "requesthandler.hpp"
+#include "responsehandler.hpp"
+#include "common.hpp"
 #include "functional/either.h"
-#include "templateengine.h"
-#include "sqlworker.h"
-#include "mysqlworker.h"
+#include "templateengine.hpp"
+#include "sqlworker.hpp"
+#include "mysqlworker.hpp"
 
 std::string getPathToExe(std::string argv0)
 {
