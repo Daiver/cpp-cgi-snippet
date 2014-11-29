@@ -9,11 +9,37 @@
 #include "sqlworker.hpp"
 #include "mysqlworker.hpp"
 
+#include "orm/orm.hpp"
+
+class BlogPost
+{
+public:
+    BlogPost()
+    {
+    }
+
+    void initOrm(orm::OrmFieldHandler handler)
+    {
+        handler << ORM_MODEL_FIELD(postCaption);
+        handler << ORM_MODEL_FIELD(postText);
+    }
+
+    std::string postCaption;
+    std::string postText;
+};
+ORM_EXPORT_CLASS(BlogPost);
 
 int main(int argc, char **argv)
 {
     std::string pathToExe = pathToFile(argv[0]);
     std::string exeName   = last(split(argv[0], '/'));
+
+    MySQLWorker mysql;
+    mysql.connect("192.168.10.101", "root", "123", "testDB");
+    orm::Database db(&mysql);
+    db.registerModel<BlogPost>();
+    db.createScheme();
+
 
     cgi::RequestHandler request;
     cgi::ResponseHandler response;

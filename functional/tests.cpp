@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include "tripple.hpp"
+#include "let.hpp"
 
 #include "../minitest.h"
 
