@@ -3,6 +3,7 @@
 
 #include <map>
 #include <string>
+#include <vector>
 
 namespace cgi {
     typedef std::map<std::string, std::string> RequestArgs;
