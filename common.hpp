@@ -35,6 +35,12 @@ bool isVectorsAreTheSame(const std::vector<T> &a, const std::vector<T> &b)
     return isVectorsAreTheSame(a, b, &compareOperator<T>);
 }
 
+template<typename T>
+inline T last(const std::vector<T> &v)
+{
+    return v[v.size() - 1];
+}
+
 std::vector<std::string> &split(const std::string &s, char delim, std::vector<std::string> &elems) ;
 
 std::vector<std::string> split(const std::string &s, char delim);

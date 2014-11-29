@@ -9,22 +9,17 @@
 #include "sqlworker.hpp"
 #include "mysqlworker.hpp"
 
-std::string getPathToExe(std::string argv0)
-{
-    std::string exeName = "bin";
-    return argv0.substr(0, argv0.size() - exeName.size());
-}
-
 
 int main(int argc, char **argv)
 {
-    std::string pathToExe = getPathToExe(argv[0]);
+    std::string pathToExe = pathToFile(argv[0]);
+    std::string exeName   = last(split(argv[0], '/'));
 
     cgi::RequestHandler request;
     cgi::ResponseHandler response;
     cgi::RequestArgs args = request.getArgs();
     cgi::RequestArgs cont;
-    cont["STATIC_PATH"] = "blog?staticfile=";
+    cont["STATIC_PATH"] = exeName + "?staticfile=";
 
     if (args.count("staticfile")){
         std::string reqFile = args["staticfile"];
