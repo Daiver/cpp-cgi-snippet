@@ -3,7 +3,7 @@
 
 #include <string>
 #include <vector>
-#include "functional/either.h"
+#include "functional/either.hpp"
 
 class SQLWorker
 {

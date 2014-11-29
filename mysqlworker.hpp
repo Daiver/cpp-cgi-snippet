@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 #include <stdio.h>
-#include "functional/either.h"
+#include "functional/either.hpp"
 #include "sqlworker.hpp"
 
 #include "mysql-connector-c-6.1.5-linux-glibc2.5-x86_64/include/my_global.h"

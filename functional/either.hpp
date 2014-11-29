@@ -1,7 +1,7 @@
 #ifndef __EITHER_H__
 #define __EITHER_H__
 
-#include "monad.h"
+#include "monad.hpp"
 
 namespace functional {
 

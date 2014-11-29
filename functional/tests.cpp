@@ -1,4 +1,4 @@
-#include "either.h"
+#include "either.hpp"
 #include <iostream>
 #include <string>
 

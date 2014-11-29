@@ -4,7 +4,7 @@
 #include "requesthandler.hpp"
 #include "responsehandler.hpp"
 #include "common.hpp"
-#include "functional/either.h"
+#include "functional/either.hpp"
 #include "templateengine.hpp"
 #include "sqlworker.hpp"
 #include "mysqlworker.hpp"

@@ -1,7 +1,7 @@
 #ifndef __MONAD_H__
 #define __MONAD_H__
 
-#include "functor.h"
+#include "functor.hpp"
 
 namespace functional {
 
