@@ -41,6 +41,8 @@ std::vector<std::string> split(const std::string &s, char delim);
 
 std::string getExtensionOfFileByPath(std::string);
 
+std::string pathToFile(const std::string &s);
+
 #ifdef __GNUG__
 #define TYPEOF(x) __typeof__((x))
 #endif

@@ -50,3 +50,12 @@ std::string getExtensionOfFileByPath(std::string s)
     std::vector<std::string> splited = split(s, '.');
     return splited[splited.size() - 1];
 }
+
+std::string pathToFile(const std::string &s)
+{
+    std::vector<std::string> vec = split(s, '/');
+    std::string res;
+    for(int i = 0; i < vec.size() - 1; ++i)
+        res += vec[i] + '/';
+    return res;
+}

@@ -11,7 +11,7 @@
 
 std::string getPathToExe(std::string argv0)
 {
-    std::string exeName = "main";
+    std::string exeName = "bin";
     return argv0.substr(0, argv0.size() - exeName.size());
 }
 
@@ -24,9 +24,9 @@ int main(int argc, char **argv)
     cgi::ResponseHandler response;
     cgi::RequestArgs args = request.getArgs();
     cgi::RequestArgs cont;
-    cont["STATIC_PATH"] = "main?staticfile=";
+    cont["STATIC_PATH"] = "blog?staticfile=";
 
-if (args.count("staticfile")){
+    if (args.count("staticfile")){
         std::string reqFile = args["staticfile"];
         std::string res = readFile(std::string("../static/") + reqFile);
         if(getExtensionOfFileByPath(reqFile) == "js")
@@ -34,7 +34,7 @@ if (args.count("staticfile")){
         response << res;
     }else{
         response << 
-            cgi::TemplateEngine::renderTemplate(readFile(pathToExe + "../templates/aindex.html"), cont).getValue();
+            cgi::TemplateEngine::renderTemplate(readFile(pathToExe + "../templates/blogindex.html"), cont).getValue();
 
     }
     response.send();

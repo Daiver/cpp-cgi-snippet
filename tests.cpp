@@ -277,6 +277,13 @@ void testGetExt()
     ASSERT_EQ(getExtensionOfFileByPath(s), std::string("cpp"));
 }
 
+void testPathTo01()
+{
+    std::string s   = "/123/43/543534635/main";
+    std::string ans = "/123/43/543534635/";
+    ASSERT_EQ(pathToFile(s), ans);
+}
+
 int main()
 {
     RUN_TEST(testTemplateEngine01);
@@ -286,6 +293,7 @@ int main()
     RUN_TEST(testCompareVectors01);
     RUN_TEST(testSplit01);
     RUN_TEST(testGetExt);
+    RUN_TEST(testPathTo01);
     dataBaseTests();
     return 0;
 }
