@@ -6,9 +6,9 @@
 #include "../common.hpp"
 #include "../sqlworker.hpp"
 
-#include "ormfield.h"
-#include "ormfieldhandler.h"
-#include "database.h"
+#include "ormfield.hpp"
+#include "ormfieldhandler.hpp"
+#include "database.hpp"
 
 
 #define ORM_EXPORT_CLASS(ClassName) \

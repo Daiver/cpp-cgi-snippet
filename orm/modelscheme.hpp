@@ -4,7 +4,7 @@
 #include <string>
 #include <sstream>
 #include <vector>
-#include "../functional/tripple.h"
+#include "../functional/tripple.hpp"
 
 namespace orm{
 

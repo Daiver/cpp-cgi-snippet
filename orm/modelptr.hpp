@@ -2,9 +2,9 @@
 #define __MODEL_PTR_H__
 
 #include "../sqlworker.hpp"
-#include "modelscheme.h"
-#include "ormfield.h"
-#include "ormfieldhandler.h"
+#include "modelscheme.hpp"
+#include "ormfield.hpp"
+#include "ormfieldhandler.hpp"
 
 namespace orm {
 

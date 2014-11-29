@@ -4,8 +4,8 @@
 #include <string>
 #include <vector>
 
-#include "ormfield.h"
-#include "../functional/tripple.h"
+#include "ormfield.hpp"
+#include "../functional/tripple.hpp"
 
 namespace orm {
 class OrmFieldHandler

@@ -8,7 +8,7 @@
 #include "commoncgi.hpp"
 #include "templateengine.hpp"
 #include "mysqlworker.hpp"
-#include "orm/orm.h"
+#include "orm/orm.hpp"
 
 using namespace cgi;
 

@@ -7,14 +7,14 @@
 #include <vector>
 #include <iostream>
 
-#include "ormfield.h"
-#include "ormfieldhandler.h"
-#include "modelscheme.h"
-#include "modelptr.h"
+#include "ormfield.hpp"
+#include "ormfieldhandler.hpp"
+#include "modelscheme.hpp"
+#include "modelptr.hpp"
 
 
 #include "../sqlworker.hpp"
-#include "../functional/tripple.h"
+#include "../functional/tripple.hpp"
 
 namespace orm {
 

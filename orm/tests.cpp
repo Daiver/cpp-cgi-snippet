@@ -1,5 +1,5 @@
 #include "../minitest.h"
-#include "orm.h"
+#include "orm.hpp"
 
 class TestCl
 {

@@ -1,4 +1,4 @@
-#include "database.h"
+#include "database.hpp"
 
 using namespace orm;
 
