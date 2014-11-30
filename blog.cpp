@@ -35,10 +35,14 @@ int main(int argc, char **argv)
     std::string exeName   = last(split(argv[0], '/'));
 
     MySQLWorker mysql;
-    mysql.connect("192.168.10.101", "root", "123", "testDB");
+    mysql.connect("192.168.10.101", "root", "123", "blogDB");
     orm::Database db(&mysql);
     db.registerModel<BlogPost>();
-    db.createScheme();
+    if(argc > 1){
+        std::cout << "Migrate" << std::endl;
+            db.createScheme();
+        return 0;
+    }
 
 
     cgi::RequestHandler request;
@@ -54,8 +58,7 @@ int main(int argc, char **argv)
             response.mimeType = "text/javascript";
         response << res;
     }else{
-        response << 
-            cgi::TemplateEngine::renderTemplate(readFile(pathToExe + "../templates/blogindex.html"), cont).getValue();
+        response << cgi::TemplateEngine::renderTemplate(readFile(pathToExe + "../templates/blogindex.html"), cont).getValue();
 
     }
     response.send();

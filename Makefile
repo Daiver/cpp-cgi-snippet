@@ -7,7 +7,7 @@ SHARED_LINK_PATH = mysql-connector-c-6.1.5-linux-glibc2.5-x86_64/lib/libmysqlcli
 CPP = g++
 
 bin/blog: framework bin/tests
-	$(CPP) -o bin/blog blog.cpp build/*.o -I$(INCLUDE_PATH) $(SHARED_LINK_PATH)
+	$(CPP) -o bin/blog blog.cpp build/*.o -I$(INCLUDE_PATH) $(SHARED_LINK_PATH) && ./bin/blog migrate
 
 bin/main: framework bin/tests
 	$(CPP) -o bin/main main.cpp build/*.o -I$(INCLUDE_PATH) $(SHARED_LINK_PATH)
